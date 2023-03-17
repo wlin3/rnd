@@ -23,11 +23,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e1635866d1c2f154e8c9045bd0e000f2, type: 2}
   - {fileID: 11400000, guid: dfb2651849bbba640970aec1f4b8601f, type: 2}
   numOfPreBossNodes:
-    min: 4
-    max: 5
+    min: 2
+    max: 3
   numOfStartingNodes:
     min: 1
-    max: 2
+    max: 1
   extraPaths: 4
   layers:
     array:
@@ -38,7 +38,7 @@ MonoBehaviour:
       nodesApartDistance: 2
       randomizePosition: 0
       randomizeNodes: 0
-    - nodeType: 0
+    - nodeType: 3
       distanceFromPreviousLayer:
         min: 2
         max: 3
