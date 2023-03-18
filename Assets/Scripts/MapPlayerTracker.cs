@@ -2,7 +2,7 @@
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 namespace Map
 {
     public class MapPlayerTracker : MonoBehaviour
@@ -69,6 +69,7 @@ namespace Map
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
+                    SceneManager.LoadScene("Enemy Stage");
                     break;
                 case NodeType.EliteEnemy:
                     break;
