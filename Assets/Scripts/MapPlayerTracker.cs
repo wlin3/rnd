@@ -3,6 +3,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 namespace Map
 {
     public class MapPlayerTracker : MonoBehaviour
@@ -11,14 +12,18 @@ namespace Map
         public float enterNodeDelay = 1f;
         public MapManager mapManager;
         public MapView view;
+       
 
         public static MapPlayerTracker Instance;
 
         public bool Locked { get; set; }
 
+        
+
         private void Awake()
         {
             Instance = this;
+           
         }
 
         public void SelectNode(MapNode mapNode)
@@ -70,6 +75,7 @@ namespace Map
             {
                 case NodeType.MinorEnemy:
                     SceneManager.LoadScene("Enemy Stage");
+                    //player.canMove = true;
                     break;
                 case NodeType.EliteEnemy:
                     break;
