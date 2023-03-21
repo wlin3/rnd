@@ -350,17 +350,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 701265843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c781b8c3f6c96d74d9653f25c393481c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8af931dba53683044b18256b8906c437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  jumpForce: 13.5
-  feetPos: {fileID: 1845116915}
-  checkRadius: 0.15
+  jumpForceLow: 5
+  jumpForceHigh: 10
+  jumpTimeThreshold: 0.2
+  groundCheck: {fileID: 1845116915}
+  groundCheckRadius: 0.1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  jumpTime: 0.2
 --- !u!1 &1210069256
 GameObject:
   m_ObjectHideFlags: 0

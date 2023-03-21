@@ -24,13 +24,14 @@ public class Jumping : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         if (Input.GetKeyDown(KeyCode.W) && isGrounded && isJumping == false)
         {
             Debug.Log("Is Jumping");
             isJumping = true;
             jumpTimeCounter = jumpTime;
-            rb.velocity = Vector2.up * jumpForce;
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
         if(Input.GetKeyUp(KeyCode.W))
             {
@@ -41,7 +42,7 @@ public class Jumping : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                rb.velocity = Vector2.up * jumpForce;
+                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
             }
             
