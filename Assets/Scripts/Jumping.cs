@@ -7,6 +7,7 @@ public class Jumping : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     private float moveInput;
     public float jumpForce;
+    public float initialJumpForce;
     private bool isGrounded;
     public Transform feetPos;
     public float checkRadius;
@@ -31,7 +32,7 @@ public class Jumping : MonoBehaviour
             Debug.Log("Is Jumping");
             isJumping = true;
             jumpTimeCounter = jumpTime;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
         }
         if(Input.GetKeyUp(KeyCode.W))
             {
@@ -42,7 +43,7 @@ public class Jumping : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 jumpTimeCounter -= Time.deltaTime;
             }
             
