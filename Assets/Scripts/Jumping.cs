@@ -29,7 +29,6 @@ public class Jumping : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         if (Input.GetKeyDown(KeyCode.W) && isGrounded && isJumping == false)
         {
-            Debug.Log("Is Jumping");
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
@@ -52,5 +51,13 @@ public class Jumping : MonoBehaviour
                 isJumping = false;
             }
         }
+    }
+
+    bool IsGrounded()
+    {
+        // Check if the enemy is grounded using a small raycast
+        float rayLength = 0.2f;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, rayLength);
+        return hit.collider != null;
     }
 }
