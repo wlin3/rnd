@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyType: 0
   player: {fileID: 647275012}
-  chaserSpeed: 4
+  chaserSpeed: 10
   chaserAcceleration: 2
   chaserDeceleration: 10
   chaserMaxDistance: 99999

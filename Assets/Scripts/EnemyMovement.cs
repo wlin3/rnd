@@ -61,7 +61,6 @@ public class EnemyMovement : MonoBehaviour
             Debug.Log(newVelocity.ToString());
             rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
 
-
             // Flip the enemy sprite if necessary
             if (direction.x > 0)
             {
@@ -79,8 +78,7 @@ public class EnemyMovement : MonoBehaviour
                 Vector2 overshootDirection = (direction.x > 0) ? Vector2.right : Vector2.left;
 
                 // Keep moving in the overshoot direction for a brief moment
-                rb.velocity = Vector2.MoveTowards(rb.velocity, overshootDirection * targetSpeed, Time.deltaTime);
-
+                rb.velocity = Vector2.MoveTowards(rb.velocity, overshootDirection * targetSpeed, chaserDeceleration * Time.deltaTime);
             }
 
 
