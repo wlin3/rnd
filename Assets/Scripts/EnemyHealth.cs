@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
+    public int enemyMaxHealth = 100;
+    public int enemyCurrentHealth;
+    private EnemyMovement enemyMovement;
+    public bool isImmune = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
+        enemyCurrentHealth = enemyMaxHealth;
+        enemyMovement = GetComponent<EnemyMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-         if (currentHealth > maxHealth)
+         if (enemyCurrentHealth > enemyMaxHealth)
         {
-            currentHealth = maxHealth;
+            enemyCurrentHealth = enemyMaxHealth;
         }
     }
 
     public void TakeDamageEnemy(int damage)
     {
-        currentHealth -= damage;
+        enemyCurrentHealth -= damage;
         Debug.Log("Damaged Enemy");
-        if(currentHealth <= 0)
+        enemyMovement.TakeDamage(damage);
+        if(enemyCurrentHealth <= 0)
         {
-            currentHealth = maxHealth;
-            Debug.Log(currentHealth.ToString());
+            Destroy(gameObject);
         }
     }
 }

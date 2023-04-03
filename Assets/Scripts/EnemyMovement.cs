@@ -19,14 +19,18 @@ public class EnemyMovement : MonoBehaviour
     public float chaserJumpInterval = 2f;
     public float chaserJumpChance = 0.2f;
     private Rigidbody2D rb;
+    private EnemyHealth enemyHealth;
     private float jumpTimer = 0f;
     public float chaserRetreatTime = 0.75f;
     [HideInInspector] public bool retreating = false;
     [HideInInspector] public bool canRetreat = true;
+    public float maxFlingForce = 15f;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        enemyHealth = GetComponent<EnemyHealth>();
+
     }
 
     // Update is called once per frame
@@ -58,8 +62,12 @@ public class EnemyMovement : MonoBehaviour
 
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
-            Debug.Log(newVelocity.ToString());
-            rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
+            //Debug.Log(newVelocity.ToString());
+            if (!retreating)
+            {
+                rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
+            }
+            //rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
 
             // Flip the enemy sprite if necessary
             if (direction.x > 0)
@@ -105,9 +113,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (!retreating)
         {
+            enemyHealth.isImmune = true;
             retreating = true;
             Vector2 direction = (player.position - transform.position).normalized;
-            Debug.Log("Flinging");
+            //Debug.Log("Flinging");
             // Jump backwards
             if (direction.x > 0)
             {
@@ -126,7 +135,29 @@ public class EnemyMovement : MonoBehaviour
     
     private void StopRetreat()
     {
-        Debug.Log("Stopped Retreating");
+        //Debug.Log("Stopped Retreating");
         retreating = false;
+        enemyHealth.isImmune = false;
+    }
+    public void TakeDamage(float damage)
+    {
+        retreating = true;
+        // Calculate the fling force based on the damage percentage
+        float damagePercentage = damage / enemyHealth.enemyMaxHealth; // Assuming maxHealth is a known float value
+        float flingForce = damagePercentage * maxFlingForce + 8f;
+        // Calculate the direction from the player to the enemy
+        Vector2 attackDirection = (transform.position - player.position).normalized;
+
+        // Apply the fling force in the direction of the attack
+        if(attackDirection.x > 0)
+        {
+            rb.AddForce(Vector2.right * flingForce, ForceMode2D.Impulse);
+        }
+        else if (attackDirection.x < 0)
+        {
+            rb.AddForce(Vector2.left * flingForce, ForceMode2D.Impulse);
+        }
+        rb.velocity = new Vector2(rb.velocity.x, flingForce * .5f);
+        Invoke("StopRetreat", chaserRetreatTime/2);
     }
 }

@@ -1534,9 +1534,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slash: {fileID: 2341051598690399453, guid: 82f54d41a9f4144429f60048fcc48bc6, type: 3}
   slashTransform: {fileID: 559568630}
-  canAttack: 0
+  canAttack: 1
   timer: 0
-  timeBetweenFiring: 1
+  timeBetweenFiring: 0.5
   offSet: 0
   projectileSpawnPoint: {fileID: 732310254}
 --- !u!1 &2027524751
@@ -1554,7 +1554,7 @@ GameObject:
   - component: {fileID: 2027524752}
   m_Layer: 8
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1618,7 +1618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1dd77a968180044eabdf19db7c22776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyType: 1
+  EnemyType: 0
   player: {fileID: 647275012}
   chaserSpeed: 10
   chaserAcceleration: 2
@@ -1630,6 +1630,7 @@ MonoBehaviour:
   chaserRetreatTime: 0.75
   retreating: 0
   canRetreat: 1
+  maxFlingForce: 50
 --- !u!4 &2027524755
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,8 +1659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed1183b4643100b4da15a538f479ec0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 0
+  enemyMaxHealth: 100
+  enemyCurrentHealth: 0
 --- !u!1 &2098158579
 GameObject:
   m_ObjectHideFlags: 0

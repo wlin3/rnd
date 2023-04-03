@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class SlashAttackVersion2 : MonoBehaviour
 {
+    public int damage = 10;
     private bool facingRight = true;
     public float lifetime = 2f; // set the lifetime of the projectile
     private Transform playerTransform;
     private Transform projectileLocation;
+    private List<Collider2D> hitEnemies = new List<Collider2D>();
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +37,7 @@ public class SlashAttackVersion2 : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
         transform.rotation = Quaternion.Euler(0, 0, rot + 180);
+
         Destroy(gameObject, lifetime);
     }
 
@@ -50,7 +53,6 @@ public class SlashAttackVersion2 : MonoBehaviour
         transform.position = projectileLocation.position;
         transform.SetParent(projectileLocation, true);
     }
-
     private void OnDestroy()
     {
         if (gameObject.activeInHierarchy)
@@ -58,4 +60,20 @@ public class SlashAttackVersion2 : MonoBehaviour
             transform.parent = null;
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision))
+        {
+            hitEnemies.Add(collision);
+
+            EnemyHealth enemy = collision.GetComponent<EnemyHealth>();
+            if (enemy != null && !enemy.isImmune)
+            {
+                enemy.TakeDamageEnemy(damage);
+            }
+        }
+    }
+
 }

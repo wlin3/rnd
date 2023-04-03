@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 2341051599670620251}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &2341051598690399452
 CapsuleCollider2D:
@@ -48,8 +48,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16235626, y: 0.29852587}
-  m_Size: {x: 0.4685762, y: 1.4713565}
+  m_Offset: {x: 0.015219331, y: 0.29852587}
+  m_Size: {x: 0.76285005, y: 1.4713565}
   m_Direction: 0
 --- !u!50 &-864142140987688762
 Rigidbody2D:
@@ -84,7 +84,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ab8e8487db0e864a8503a54ac24bc67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 0.5
+  damage: 10
+  lifetime: 0.4
 --- !u!1 &2341051599670620244
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +158,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 8b19094a5343e114eac53ff8c21f0585, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

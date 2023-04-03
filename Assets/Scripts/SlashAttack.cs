@@ -9,6 +9,7 @@ public class SlashAttack : MonoBehaviour
     private bool facingRight = true;
     public float lifetime = 2f; // set the lifetime of the projectile
 
+
     // Start is called before the first frame update
     void Start()
     {
