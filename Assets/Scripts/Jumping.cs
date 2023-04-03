@@ -25,9 +25,6 @@ public class Jumping : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGrounded){
-            Debug.Log("Is Grounded");
-        }
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         if (Input.GetKeyDown(KeyCode.W) && isGrounded && isJumping == false)
         {
