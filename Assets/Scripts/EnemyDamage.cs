@@ -7,12 +7,14 @@ public class EnemyDamage : MonoBehaviour
 {
     public int damage;
     PlayerHealth playerHealth;
+    EnemyMovement enemyMovement;
 
     Player player;
     void Awake()
     {
         playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        enemyMovement = transform.parent.GetComponent<EnemyMovement>();
     }
     private void Reset()
     {
@@ -24,6 +26,7 @@ public class EnemyDamage : MonoBehaviour
         if(collision.tag == "Player")
         {
             playerHealth.TakeDamage(damage);
+            enemyMovement.EnemyRetreat();
         }
     }
 
