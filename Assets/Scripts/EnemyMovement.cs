@@ -158,6 +158,6 @@ public class EnemyMovement : MonoBehaviour
             rb.AddForce(Vector2.left * flingForce, ForceMode2D.Impulse);
         }
         rb.velocity = new Vector2(rb.velocity.x, flingForce * .5f);
-        Invoke("StopRetreat", chaserRetreatTime/2);
+        Invoke("StopRetreat", chaserRetreatTime/2 + damagePercentage * 1.3f);
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -864142140987688762}
   - component: {fileID: -3945083654605332900}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Slash Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
