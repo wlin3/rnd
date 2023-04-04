@@ -6,8 +6,8 @@ using UnityEngine;
 public class WeaponParent : MonoBehaviour
 {
     private Transform spriteTransform;
-    public GameObject slash;
-    public Transform slashTransform;
+    public GameObject projectile;
+    public Transform projectileTransform;
     public bool canAttack;
     public float timer;
     public float timeBetweenFiring;
@@ -55,6 +55,6 @@ public class WeaponParent : MonoBehaviour
         Vector3 spawnOffset = transform.right * offSet;
         
         canAttack = false;
-        Instantiate(slash, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+        Instantiate(projectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
     }
 }
