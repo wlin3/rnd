@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afb76712e1d29c47b6d9062e91f48e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5088846627274742601, guid: e1657b3454945c845bf51a306ea5997e, type: 3}
+  prefab: {fileID: 1409601163151742868, guid: 16ce3ae45c3cf6749affa35b3ddbac5e, type: 3}
 --- !u!1 &732310253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,6 +1555,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
+  disableDistance: 5
+  fadeDistance: 8
+  fadeSpeed: 1
+  minScale: 0.3
 --- !u!1 &1057467986
 GameObject:
   m_ObjectHideFlags: 0
