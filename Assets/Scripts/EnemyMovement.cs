@@ -30,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
+        EnemyType = (enemyType)Random.Range(0, 2);
 
     }
 
