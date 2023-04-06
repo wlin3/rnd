@@ -4,47 +4,63 @@ using UnityEngine;
 
 public class IndicatorScript : MonoBehaviour
 {
-    public GameObject target; // the target to track
-    public GameObject indicatorPrefab; // the arrow indicator prefab
+    public GameObject prefab;
+    private List<Transform> enemies = new List<Transform>();
+    private Dictionary<Transform, GameObject> enemyToPointer = new Dictionary<Transform, GameObject>();
 
-    private GameObject indicator; // the instantiated arrow indicator
-    private Camera cam; // reference to the camera
-    private Vector2 screenBounds; // the screen boundaries
-    private Vector2 targetPos; // the target's position
-    private Bounds targetBounds; // the target's bounds
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        // get reference to the camera
-        cam = Camera.main;
-
-        // calculate the screen boundaries
-        screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
-
-        // instantiate the arrow indicator
-        indicator = Instantiate(indicatorPrefab, transform);
-
-        // get the target's bounds
-        targetBounds = target.GetComponent<Collider2D>().bounds;
+        InvokeRepeating(nameof(UpdateEnemies), 0f, 1f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateEnemies()
     {
-        // get the target's position
-        targetPos = target.transform.position;
+        GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
 
-        // calculate the arrow indicator's position
-        float arrowPosX = Mathf.Clamp(targetPos.x, screenBounds.x, screenBounds.x * -1);
-        float arrowPosY = Mathf.Clamp(targetPos.y, screenBounds.y, screenBounds.y * -1);
-        Vector3 arrowPos = new Vector3(arrowPosX, arrowPosY, 0);
-        Vector3 camPos = cam.transform.position;
-        Vector3 direction = (arrowPos - camPos).normalized;
+        foreach (GameObject enemy in enemyObjects)
+        {
+            if (enemy.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                if (!enemies.Contains(enemy.transform))
+                {
+                    enemies.Add(enemy.transform);
+                }
 
-        // set the arrow indicator's position and rotation
-        indicator.transform.position = camPos + direction * 5f;
-        indicator.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+                if (!enemyToPointer.ContainsKey(enemy.transform))
+                {
+                    GameObject pointerAdded = new GameObject("pointerAdded");
+                    pointerAdded.transform.parent = enemy.transform;
+                    enemyToPointer.Add(enemy.transform, pointerAdded);
+
+                    SpawnPointer(enemy.transform);
+                }
+            }
+            else
+            {
+                if (enemies.Contains(enemy.transform))
+                {
+                    enemies.Remove(enemy.transform);
+                }
+
+                if (enemyToPointer.ContainsKey(enemy.transform))
+                {
+                    GameObject pointerAdded = enemyToPointer[enemy.transform];
+                    enemyToPointer.Remove(enemy.transform);
+                    Destroy(pointerAdded);
+                }
+            }
+        }
+    }
+
+    private void SpawnPointer(Transform targetEnemy)
+    {
+        GameObject pointerObject = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        pointerObject.transform.parent = GameObject.Find("Player").transform;
+        pointerObject.transform.localPosition = Vector3.zero;
+        PointerScript pointerScript = pointerObject.GetComponent<PointerScript>();
+        pointerScript.Target = targetEnemy;
+        enemyToPointer[targetEnemy] = pointerObject;
     }
 
 }
+
