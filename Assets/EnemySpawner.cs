@@ -1,60 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public int minEnemies = 10;
+    public int minEnemies = 15;
     public int maxEnemies = 45;
     public float spawnRadius = 10f;
     public float spawnDelay = 0.5f;
-    public float maxEnemiesOnScreen = 15f;
+    private int numberOfEnemies;
 
-    private List<GameObject> spawnedEnemies = new List<GameObject>();
-    private Camera mainCamera;
-    private float timeSinceLastSpawn;
+    private int enemiesToSpawn;
+    private int enemiesSpawned;
+    private int maxEnemiesOnScreen;
+    public GameObject player;
 
-    void Start()
+    private void Start()
     {
-        mainCamera = Camera.main;
-        SpawnEnemies();
-    }
+        numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
 
-    void Update()
-    {
-        timeSinceLastSpawn += Time.deltaTime;
+        // Calculate max number of enemies on screen based on maxEnemies
+        maxEnemiesOnScreen = Mathf.CeilToInt(numberOfEnemies / 3f);
 
-        if (timeSinceLastSpawn >= spawnDelay && spawnedEnemies.Count < maxEnemies)
+        // Calculate number of enemies to spawn in first frame
+        enemiesToSpawn = Mathf.FloorToInt(numberOfEnemies / 5f);
+
+        // Spawn initial enemies
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
-            SpawnEnemies();
-            timeSinceLastSpawn = 0f; // reset timeSinceLastSpawn
+            SpawnEnemy();
         }
     }
 
-    private void SpawnEnemies()
+    private void Update()
     {
-        int enemiesToSpawn = Random.Range(minEnemies, maxEnemies + 1);
-        int enemiesSpawned = 0;
-
-        while (enemiesSpawned < enemiesToSpawn && spawnedEnemies.Count < maxEnemies)
+        // Check if any new enemies need to be spawned
+        if (enemiesSpawned < maxEnemies && transform.childCount < maxEnemiesOnScreen)
         {
-            GameObject enemyObject = Instantiate(enemyPrefab, GetRandomSpawnPoint(), Quaternion.identity);
-            spawnedEnemies.Add(enemyObject);
-            enemiesSpawned++;
-
-            if (spawnedEnemies.Count >= Mathf.FloorToInt(maxEnemies / 3f))
-            {
-                break;
-            }
+            SpawnEnemy();
         }
+
+        // Debug log number of enemies on screen and number of enemies left to spawn
+        Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
     }
 
-
-    private Vector3 GetRandomSpawnPoint()
+    private void SpawnEnemy()
     {
-        Vector2 randomPoint = Random.insideUnitCircle.normalized * spawnRadius;
-        Vector3 spawnPoint = transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
+        if (enemiesSpawned >= maxEnemies)
+        {
+            return;
+        }
+
+        Vector3 spawnPosition = GetRandomSpawnPosition();
+        GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
+
+        // Add a null check for newEnemy
+        if (newEnemy == null)
+        {
+            return;
+        }
+
+        enemiesSpawned++;
+
+        // You can add any additional code here that needs to access the new enemy GameObject
+    }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
+        Vector3 spawnPoint = player.transform.position + new Vector3(randomDirection.x, 0f, randomDirection.y) * spawnRadius;
         return spawnPoint;
+    }
+
+    private void OnValidate()
+    {
+        // Ensure that minEnemies and maxEnemies are within valid ranges
+        minEnemies = Mathf.Clamp(minEnemies, 1, int.MaxValue);
+        maxEnemies = Mathf.Clamp(maxEnemies, minEnemies, int.MaxValue);
     }
 }

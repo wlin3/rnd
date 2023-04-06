@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public enum enemyType { Chaser, Shooter, Flyer }
     public enemyType EnemyType;  // this public var should appear as a drop down
     public Transform player;
+    public Transform target;
     [Header("Chaser Setup")]
     public float chaserSpeed = 5f;
     public float chaserAcceleration = 10f;
@@ -28,6 +29,15 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Transform playerPosition = player.transform.Find("Player Position");
+            if (playerPosition != null)
+            {
+                target = playerPosition;
+            }
+        }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
         EnemyType = (enemyType)Random.Range(0, 2);
@@ -50,12 +60,12 @@ public class EnemyMovement : MonoBehaviour
         {
             return;
         }
-        float distance = Vector2.Distance(transform.position, player.position);
+        float distance = Vector2.Distance(transform.position, target.position);
         
         // If the player is within range, chase the player
         if (distance <= chaserMaxDistance)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 direction = (target.position - transform.position).normalized;
 
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(chaserAcceleration * distance / chaserMaxDistance, chaserSpeed, chaserAcceleration);
@@ -116,7 +126,7 @@ public class EnemyMovement : MonoBehaviour
         {
             enemyHealth.isImmune = true;
             retreating = true;
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 direction = (target.position - transform.position).normalized;
             //Debug.Log("Flinging");
             // Jump backwards
             if (direction.x > 0)
@@ -147,7 +157,7 @@ public class EnemyMovement : MonoBehaviour
         float damagePercentage = damage / enemyHealth.enemyMaxHealth; // Assuming maxHealth is a known float value
         float flingForce = damagePercentage * maxFlingForce + 8f;
         // Calculate the direction from the player to the enemy
-        Vector2 attackDirection = (transform.position - player.position).normalized;
+        Vector2 attackDirection = (transform.position - target.position).normalized;
 
         // Apply the fling force in the direction of the attack
         if(attackDirection.x > 0)
@@ -161,4 +171,5 @@ public class EnemyMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, flingForce * .5f);
         Invoke("StopRetreat", chaserRetreatTime/2 + damagePercentage * 1.3f);
     }
+
 }
