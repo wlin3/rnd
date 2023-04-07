@@ -17,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
     private int maxEnemiesOnScreen;
     public GameObject player;
 
+    private int enemyCount = 0;
+
     private void Start()
     {
         numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
@@ -43,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Debug log number of enemies on screen and number of enemies left to spawn
-        Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
+        //Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
     }
 
     private void SpawnEnemy()
@@ -62,11 +64,14 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
+        // Rename the enemy GameObject
+        enemyCount++;
+        newEnemy.name = "Enemy" + enemyCount;
+
         enemiesSpawned++;
 
         // You can add any additional code here that needs to access the new enemy GameObject
     }
-
     private Vector3 GetRandomSpawnPosition()
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;

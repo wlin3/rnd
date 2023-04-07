@@ -40,7 +40,8 @@ public class EnemyMovement : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
-        EnemyType = (enemyType)Random.Range(0, 2);
+        //EnemyType = (enemyType)Random.Range(0, 2);
+        EnemyType = enemyType.Chaser;
 
     }
 
@@ -73,6 +74,7 @@ public class EnemyMovement : MonoBehaviour
 
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
+            Debug.Log("Enemy Named" +  gameObject.name + "has a target speed of " + targetSpeed + "and a new velocity of " + newVelocity + "and a direction of " + direction);
             //Debug.Log(newVelocity.ToString());
             if (!retreating)
             {
