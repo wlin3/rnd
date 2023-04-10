@@ -27,6 +27,17 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector] public bool canRetreat = true;
     public float maxFlingForce = 15f;
     public float chaserOvershootDistance = 10f;
+
+    [Header("Shooter Setup")]
+    public GameObject shooterProjectilePrefab;
+    public float shooterMaxDistance = 10f; // max distance from the player
+    public float shooterSpeed = 3f; // speed of the enemy when chasing
+    public float shooterAcceleration = 10f; // acceleration of the enemy when chasing
+    public float shooterAttackCooldownMin = 2f; // minimum time between attacks
+    public float shooterAttackCooldownMax = 4f; // maximum time between attacks
+    private float shooterAttackCooldownTimer; // timer for attack cooldown
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +52,21 @@ public class EnemyMovement : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
-        //EnemyType = (enemyType)Random.Range(0, 2);
-        EnemyType = enemyType.Chaser;
-
+        EnemyType = (enemyType)Random.Range(0, 2);
+        //EnemyType = enemyType.Shooter;
+        if (EnemyType == enemyType.Shooter)
+        {
+            enemyHealth.enemyMaxHealth = 30;
+            enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
+            gameObject.name += "_Shooter";
+            shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+        }
+        else if(EnemyType == enemyType.Chaser)
+        {
+            enemyHealth.enemyMaxHealth = 75;
+            enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
+            gameObject.name += "_Chaser";
+        }
     }
 
     // Update is called once per frame
@@ -52,6 +75,11 @@ public class EnemyMovement : MonoBehaviour
         if (EnemyType == enemyType.Chaser)
         {
             Chaser();
+        }
+        
+        if (EnemyType == enemyType.Shooter)
+        {
+            Shooter();
         }
     }
 
@@ -193,10 +221,54 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         // Turn the enemy around
-        Vector3 newScale = transform.localScale;
-        newScale.x = -newScale.x;
-        transform.localScale = newScale;
+        //Vector3 newScale = transform.localScale;
+        //newScale.x = -newScale.x;
+        //transform.localScale = newScale;
         StopRetreat();
     }
 
+    void Shooter()
+    {
+         float distance = Vector2.Distance(transform.position, target.position);
+
+        // If the player is within range, shoot at the player
+        if (distance <= shooterMaxDistance)
+        {
+            // Update attack cooldown timer
+            shooterAttackCooldownTimer -= Time.deltaTime;
+
+            // If attack cooldown has elapsed, shoot at the player
+            if (shooterAttackCooldownTimer <= 0)
+            {
+                ShootAtTarget(target.position);
+
+                // Reset attack cooldown timer
+                shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+            }
+        }
+
+        // If the player is out of range, move towards the player
+        else
+        {
+            Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+
+            // Calculate the speed of the enemy based on the distance to the player
+            float targetSpeed = Mathf.Clamp(shooterAcceleration * distance / shooterMaxDistance, shooterSpeed, shooterAcceleration);
+
+            // Move towards the player
+            Vector2 newVelocity = direction * targetSpeed;
+            rb.velocity = newVelocity;
+        }
+    }
+
+    void ShootAtTarget(Vector2 targetPosition)
+    {
+        // Create projectile and set its position and rotation
+        GameObject newProjectile = Instantiate(shooterProjectilePrefab, transform.position, Quaternion.identity);
+        newProjectile.transform.right = targetPosition - (Vector2)transform.position;
+
+        // Add force to the projectile in the direction of the player
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        newProjectile.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
+    }
 }

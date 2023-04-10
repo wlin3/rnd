@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 100
+  controlID: 52
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -331,8 +331,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 044c0000
-    m_LastClickedID: 19460
+    m_SelectedIDs: f64a0000
+    m_LastClickedID: 19190
     m_ExpandedIDs: 00000000c24a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -386,9 +386,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 1a490000
-    m_LastClickedInstanceID: 18714
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: d0680000
+    m_LastClickedInstanceID: 26832
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300007a490000c2510000bc510000f24900005e500000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -491,9 +491,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 92c3ffff30fbffff1a49000054490000ee490000
+      m_SelectedIDs: 4ae8ffff
+      m_LastClickedID: -6070
+      m_ExpandedIDs: 4ae8ffff30fbffff1a4900005449000076490000d8490000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -809,9 +809,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -3.179804, y: -2.806258, z: -0.26812705}
+    m_Target: {x: 2.6578877, y: -0.62295425, z: -0.31004617}
     speed: 2
-    m_Value: {x: -3.179804, y: -2.806258, z: -0.26812705}
+    m_Value: {x: 2.6578877, y: -0.62295425, z: -0.31004617}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -861,9 +861,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.205113
+    m_Target: 8.712364
     speed: 2
-    m_Value: 5.205113
+    m_Value: 8.712364
   m_Ortho:
     m_Target: 1
     speed: 2
