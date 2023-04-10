@@ -231,6 +231,7 @@ MonoBehaviour:
   retreating: 0
   canRetreat: 1
   maxFlingForce: 50
+  chaserOvershootDistance: 10
 --- !u!4 &28772963
 Transform:
   m_ObjectHideFlags: 0
@@ -467,6 +468,7 @@ MonoBehaviour:
   retreating: 0
   canRetreat: 1
   maxFlingForce: 50
+  chaserOvershootDistance: 10
 --- !u!4 &380653577
 Transform:
   m_ObjectHideFlags: 0
@@ -517,7 +519,7 @@ MonoBehaviour:
   minEnemies: 10
   maxEnemies: 45
   spawnRadius: 50
-  spawnDelay: 0.75
+  spawnDelay: 3
   player: {fileID: 701265843}
 --- !u!4 &421712271
 Transform:
@@ -2759,6 +2761,7 @@ MonoBehaviour:
   retreating: 0
   canRetreat: 1
   maxFlingForce: 50
+  chaserOvershootDistance: 10
 --- !u!4 &2027524755
 Transform:
   m_ObjectHideFlags: 0

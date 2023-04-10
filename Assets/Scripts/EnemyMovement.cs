@@ -26,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector] public bool retreating = false;
     [HideInInspector] public bool canRetreat = true;
     public float maxFlingForce = 15f;
+    public float chaserOvershootDistance = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,26 +62,40 @@ public class EnemyMovement : MonoBehaviour
         {
             return;
         }
+
         float distance = Vector2.Distance(transform.position, target.position);
         
         // If the player is within range, chase the player
         if (distance <= chaserMaxDistance)
         {
-            Vector2 direction = (target.position - transform.position).normalized;
+            Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(chaserAcceleration * distance / chaserMaxDistance, chaserSpeed, chaserAcceleration);
 
-
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
-            Debug.Log("Enemy Named" +  gameObject.name + "has a target speed of " + targetSpeed + "and a new velocity of " + newVelocity + "and a direction of " + direction);
-            //Debug.Log(newVelocity.ToString());
-            if (!retreating)
+
+            // Check if the enemy has overshot the player
+            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(direction.x) && Mathf.Abs(rb.velocity.x) > 50f)
             {
+                // Calculate the overshoot direction
+                Vector2 overshootDirection = (direction.x > 0) ? Vector2.right : Vector2.left;
+
+                // Keep moving in the overshoot direction for a brief moment
+                rb.velocity = Vector2.MoveTowards(rb.velocity, overshootDirection * targetSpeed, chaserDeceleration * Time.deltaTime);
+            }
+            else if (Mathf.Abs(target.position.x - transform.position.x) < 0.5f)
+            {
+                // If the enemy's x position is very close to the player's x position, keep moving in the current direction for a brief moment
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+                StartCoroutine(DecelerateAndTurnAround());
+            }
+            else
+            {
+                // Otherwise, move towards the player as normal
                 rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
             }
-            //rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
 
             // Flip the enemy sprite if necessary
             if (direction.x > 0)
@@ -91,17 +106,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1, 1, 1);
             }
-
-            // Check if the enemy has overshot the player
-            if(Mathf.Sign(rb.velocity.x) != Mathf.Sign(direction.x) && Mathf.Abs(rb.velocity.x) > 50f)
-            {
-                // Calculate the overshoot direction
-                Vector2 overshootDirection = (direction.x > 0) ? Vector2.right : Vector2.left;
-
-                // Keep moving in the overshoot direction for a brief moment
-                rb.velocity = Vector2.MoveTowards(rb.velocity, overshootDirection * targetSpeed, chaserDeceleration * Time.deltaTime);
-            }
-
 
             // Randomly jump if it's time to jump and the enemy is on the ground
             if (Time.time >= jumpTimer && IsGrounded() && Random.value <= chaserJumpChance)
@@ -172,6 +176,27 @@ public class EnemyMovement : MonoBehaviour
         }
         rb.velocity = new Vector2(rb.velocity.x, flingForce * .5f);
         Invoke("StopRetreat", chaserRetreatTime/2 + damagePercentage * 1.3f);
+    }
+
+    IEnumerator DecelerateAndTurnAround()
+    {
+        retreating = true;
+        // Wait for a brief moment before decelerating
+        yield return new WaitForSeconds(0.3f);
+
+        // Decelerate the enemy's horizontal velocity
+        float decelerationAmount = chaserDeceleration * Time.deltaTime;
+        float newXVelocity = Mathf.MoveTowards(rb.velocity.x, 0f, decelerationAmount);
+        rb.velocity = new Vector2(newXVelocity, rb.velocity.y);
+
+        // Wait for another brief moment before turning around
+        yield return new WaitForSeconds(0.2f);
+
+        // Turn the enemy around
+        Vector3 newScale = transform.localScale;
+        newScale.x = -newScale.x;
+        transform.localScale = newScale;
+        StopRetreat();
     }
 
 }
