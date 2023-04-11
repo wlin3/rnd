@@ -9,6 +9,10 @@ public class EnemyWeaponParent : MonoBehaviour
     public Transform projectileSpawnPoint;
     private EnemyMovement enemyMovement;
 
+    public GameObject chaserWeaponSprite;
+    public GameObject shooterWeaponSprite;
+    public GameObject shotgunnerWeaponSprite;
+
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;

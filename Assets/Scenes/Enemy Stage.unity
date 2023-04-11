@@ -220,6 +220,7 @@ MonoBehaviour:
   EnemyType: 0
   player: {fileID: 0}
   target: {fileID: 0}
+  chaserSprite: {fileID: 0}
   chaserSpeed: 10
   chaserAcceleration: 2
   chaserDeceleration: 10
@@ -233,6 +234,7 @@ MonoBehaviour:
   maxFlingForce: 50
   chaserOvershootDistance: 10
   facingRight: 1
+  shooterSprite: {fileID: 0}
   shooterProjectilePrefab: {fileID: 0}
   shooterMaxDistance: 10
   shooterSpeed: 3
@@ -464,6 +466,7 @@ MonoBehaviour:
   EnemyType: 0
   player: {fileID: 0}
   target: {fileID: 0}
+  chaserSprite: {fileID: 0}
   chaserSpeed: 10
   chaserAcceleration: 2
   chaserDeceleration: 10
@@ -477,6 +480,7 @@ MonoBehaviour:
   maxFlingForce: 50
   chaserOvershootDistance: 10
   facingRight: 1
+  shooterSprite: {fileID: 0}
   shooterProjectilePrefab: {fileID: 0}
   shooterMaxDistance: 10
   shooterSpeed: 3
@@ -3068,7 +3072,7 @@ PrefabInstance:
     - target: {fileID: 6894516367495052027, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6894516368872033009, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}

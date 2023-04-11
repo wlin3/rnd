@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 spawnPosition = GetRandomSpawnPosition();
         // Set the y and z values to 0, and the x value to the spawn radius
-        spawnPosition = new Vector3(spawnRadius, 0f, 0f);
+        spawnPosition = new Vector3(spawnPoint, 0f, 0f);
 
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
 

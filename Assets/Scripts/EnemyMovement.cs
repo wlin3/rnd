@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public Transform player;
     public Transform target;
     [Header("Chaser Setup")]
+    public GameObject chaserSprite;
     public float chaserSpeed = 5f;
     public float chaserAcceleration = 10f;
     public float chaserDeceleration = 5f;
@@ -30,6 +31,7 @@ public class EnemyMovement : MonoBehaviour
     public bool facingRight = true;
     private Transform spriteTransform;
     [Header("Shooter Setup")]
+    public GameObject shooterSprite;
     public GameObject shooterProjectilePrefab;
     public float shooterMaxDistance = 10f; // max distance from the player
     public float shooterSpeed = 3f; // speed of the enemy when chasing
@@ -62,12 +64,18 @@ public class EnemyMovement : MonoBehaviour
             enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
             gameObject.name += "_Shooter";
             shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+            chaserSprite.SetActive(false);
+            shooterSprite.SetActive(true);
+            //flyerSprite.SetActive(false);
         }
         else if(EnemyType == enemyType.Chaser)
         {
             enemyHealth.enemyMaxHealth = 75;
             enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
             gameObject.name += "_Chaser";
+            chaserSprite.SetActive(true);
+            shooterSprite.SetActive(false);
+            //flyerSprite.SetActive(false);
         }
     }
 
