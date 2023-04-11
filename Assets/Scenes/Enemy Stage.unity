@@ -236,6 +236,7 @@ MonoBehaviour:
   facingRight: 1
   shooterSprite: {fileID: 0}
   shooterProjectilePrefab: {fileID: 0}
+  shooterProjectileSpawnPoint: {fileID: 0}
   shooterMaxDistance: 10
   shooterSpeed: 3
   shooterAcceleration: 10
@@ -482,6 +483,7 @@ MonoBehaviour:
   facingRight: 1
   shooterSprite: {fileID: 0}
   shooterProjectilePrefab: {fileID: 0}
+  shooterProjectileSpawnPoint: {fileID: 0}
   shooterMaxDistance: 10
   shooterSpeed: 3
   shooterAcceleration: 10
@@ -519,7 +521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &421712270
 MonoBehaviour:
   m_ObjectHideFlags: 0

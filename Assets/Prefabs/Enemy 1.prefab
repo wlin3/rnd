@@ -153,6 +153,7 @@ MonoBehaviour:
   shooterSprite: {fileID: 6894516367922919464}
   shooterProjectilePrefab: {fileID: 2962069865484352742, guid: 773d86cd208bfb14d85197d5814cd508,
     type: 3}
+  shooterProjectileSpawnPoint: {fileID: 6894516369225009164}
   shooterMaxDistance: 20
   shooterSpeed: 4
   shooterAcceleration: 10

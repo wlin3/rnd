@@ -33,6 +33,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("Shooter Setup")]
     public GameObject shooterSprite;
     public GameObject shooterProjectilePrefab;
+    public Transform shooterProjectileSpawnPoint;
     public float shooterMaxDistance = 10f; // max distance from the player
     public float shooterSpeed = 3f; // speed of the enemy when chasing
     public float shooterAcceleration = 10f; // acceleration of the enemy when chasing
@@ -295,7 +296,7 @@ public class EnemyMovement : MonoBehaviour
     void ShootAtTarget(Vector2 targetPosition)
     {
         // Create projectile and set its position and rotation
-        GameObject newProjectile = Instantiate(shooterProjectilePrefab, transform.position, Quaternion.identity);
+        GameObject newProjectile = Instantiate(shooterProjectilePrefab, shooterProjectileSpawnPoint.position, Quaternion.identity);
         newProjectile.transform.right = targetPosition - (Vector2)transform.position;
 
         // Add force to the projectile in the direction of the player

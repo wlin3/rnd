@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
 
         Vector3 spawnPosition = GetRandomSpawnPosition();
         // Set the y and z values to 0, and the x value to the spawn radius
-        spawnPosition = new Vector3(spawnPoint, 0f, 0f);
+        //spawnPosition = new Vector3(spawnPoint, 0f, 0f);
 
         GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, transform);
 
@@ -78,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 GetRandomSpawnPosition()
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        Vector3 spawnPoint = player.transform.position + new Vector3(randomDirection.x, 0f, randomDirection.y) * spawnRadius;
+        Vector3 spawnPoint = player.transform.position + new Vector3(randomDirection.x, 0f, 0f) * spawnRadius;
         return spawnPoint;
     }
 
