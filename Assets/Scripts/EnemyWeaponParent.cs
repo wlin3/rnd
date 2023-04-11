@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class EnemyWeaponParent : MonoBehaviour
 {
-    private Transform spriteTransform;
+    public Transform weaponTransform;
     private Transform playerTransform;
     public Transform projectileSpawnPoint;
+    private EnemyMovement enemyMovement;
 
     void Start()
     {
-        spriteTransform = transform;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        enemyMovement = GetComponentInParent<EnemyMovement>();
     }
 
     void Update()
-    {
-        Vector2 direction = (playerTransform.position - spriteTransform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        spriteTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
+{
 
+    Vector3 direction = playerTransform.position - transform.position;
+    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+}
 }

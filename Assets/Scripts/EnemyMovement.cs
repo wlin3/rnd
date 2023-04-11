@@ -27,7 +27,8 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector] public bool canRetreat = true;
     public float maxFlingForce = 15f;
     public float chaserOvershootDistance = 10f;
-
+    public bool facingRight = true;
+    private Transform spriteTransform;
     [Header("Shooter Setup")]
     public GameObject shooterProjectilePrefab;
     public float shooterMaxDistance = 10f; // max distance from the player
@@ -41,6 +42,7 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteTransform = transform;
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -126,13 +128,18 @@ public class EnemyMovement : MonoBehaviour
             }
 
             // Flip the enemy sprite if necessary
-            if (direction.x > 0)
+            if (direction.x < 0 && facingRight) 
             {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (direction.x < 0)
+                facingRight = false;
+                spriteTransform.localScale = new Vector3(1, -1, 1);
+                transform.Rotate(0, 0, 180);
+                direction = new Vector2(-direction.x, -direction.y);
+            } 
+            else if(direction.x > 0 && !facingRight)
             {
-                transform.localScale = new Vector3(-1, 1, 1);
+                facingRight = true;
+                transform.Rotate(0, 0, 180);
+                spriteTransform.localScale = new Vector3(1, 1, 1);
             }
 
             // Randomly jump if it's time to jump and the enemy is on the ground
@@ -210,15 +217,16 @@ public class EnemyMovement : MonoBehaviour
     {
         retreating = true;
         // Wait for a brief moment before decelerating
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
 
         // Decelerate the enemy's horizontal velocity
         float decelerationAmount = chaserDeceleration * Time.deltaTime;
         float newXVelocity = Mathf.MoveTowards(rb.velocity.x, 0f, decelerationAmount);
         rb.velocity = new Vector2(newXVelocity, rb.velocity.y);
+        
 
         // Wait for another brief moment before turning around
-        yield return new WaitForSeconds(0.2f);
+        //yield return new WaitForSeconds(0.2f);
 
         // Turn the enemy around
         //Vector3 newScale = transform.localScale;
@@ -230,6 +238,7 @@ public class EnemyMovement : MonoBehaviour
     void Shooter()
     {
          float distance = Vector2.Distance(transform.position, target.position);
+         Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
         // If the player is within range, shoot at the player
         if (distance <= shooterMaxDistance)
@@ -250,7 +259,7 @@ public class EnemyMovement : MonoBehaviour
         // If the player is out of range, move towards the player
         else
         {
-            Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+            //Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(shooterAcceleration * distance / shooterMaxDistance, shooterSpeed, shooterAcceleration);
@@ -258,6 +267,20 @@ public class EnemyMovement : MonoBehaviour
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
             rb.velocity = newVelocity;
+        }
+        
+        if (direction.x < 0 && facingRight) 
+        {
+            facingRight = false;
+            spriteTransform.localScale = new Vector3(1, -1, 1);
+            transform.Rotate(0, 0, 180);
+            direction = new Vector2(-direction.x, -direction.y);
+        } 
+        else if(direction.x > 0 && !facingRight)
+        {
+            facingRight = true;
+            transform.Rotate(0, 0, 180);
+            spriteTransform.localScale = new Vector3(1, 1, 1);
         }
     }
 
