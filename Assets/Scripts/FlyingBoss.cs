@@ -4,32 +4,66 @@ using UnityEngine;
 
 public class FlyingBoss : MonoBehaviour
 {
-    public float speed;
-    private GameObject player;
-    // Start is called before the first frame update
-    void Start()
+    public float speed = 10f;
+    public float dashDistance = 10f;
+    public float dashDuration = 0.5f;
+    public float dashCooldown = 2f;
+    public float dashHeight = 5f;
+
+    private Transform playerTransform;
+    private bool canDash = true;
+
+    private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(player == null)
-            return;
-        chase();
-        Flip();
-    }
-    private void chase()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        if (canDash)
+        {
+            // Calculate the direction towards the player
+            Vector3 direction = playerTransform.position - transform.position;
+            direction.y = 0f;
+
+            // Dash towards the player
+            StartCoroutine(Dash(direction.normalized));
+
+            // Reset dash cooldown
+            canDash = false;
+            Invoke(nameof(ResetDashCooldown), dashCooldown);
+        }
     }
 
-    private void Flip()
+    private IEnumerator Dash(Vector3 direction)
     {
-        if(transform.position.x>player.transform.position.x)
-            transform.rotation = Quaternion.Euler(0,180,0);
-        else
-            transform.rotation = Quaternion.Euler(0,0,0);
+        // Store the initial position
+        Vector3 initialPosition = transform.position;
+
+        // Calculate the target position
+        Vector3 targetPosition = transform.position + direction * dashDistance;
+        targetPosition.y = playerTransform.position.y;
+
+        // Calculate the duration of the dash
+        float dashTime = 0f;
+        while (dashTime < dashDuration)
+        {
+            // Update the position of the enemy
+            transform.position = Vector3.Lerp(initialPosition, targetPosition, dashTime / dashDuration);
+
+            // Increment the dash time
+            dashTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Snap to the target position
+        transform.position = targetPosition;
+    }
+
+    private void ResetDashCooldown()
+    {
+        canDash = true;
     }
 }
