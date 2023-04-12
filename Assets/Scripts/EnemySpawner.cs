@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -17,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesSpawned;
     private int maxEnemiesOnScreen;
     public GameObject player;
+    public TMP_Text enemyText;
 
     private int enemyCount = 0;
 
@@ -40,22 +44,23 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         // Check if any new enemies need to be spawned
-        if (enemiesSpawned < maxEnemies && transform.childCount < maxEnemiesOnScreen)
+        if (enemiesSpawned < numberOfEnemies && transform.childCount < maxEnemiesOnScreen)
         {
             SpawnEnemy();
         }
 
-        if (enemiesSpawned == maxEnemies && transform.childCount == 0)
+        if (enemiesSpawned == numberOfEnemies && transform.childCount == 0)
         {
             GameManager.Instance.WinEnemyStage();// Call the WinEnemyStage method from the GameManager script
         }
         // Debug log number of enemies on screen and number of enemies left to spawn
-        Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
+        enemyText.text = "Enemies Left: " + (transform.childCount + numberOfEnemies - enemiesSpawned);
+        //Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (numberOfEnemies - enemiesSpawned));
     }
 
     private void SpawnEnemy()
     {
-        if (enemiesSpawned >= maxEnemies)
+        if (enemiesSpawned >= numberOfEnemies)
         {
             return;
         }

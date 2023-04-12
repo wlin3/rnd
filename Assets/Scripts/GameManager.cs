@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public int testPoints = 0;
 
+    public bool canTeleport = true;
+
     // Name of the GameManager GameObject
     private string mainGameManagerObjectName = "[Main] Game Manager"; // New name for the main GameManager object
 
@@ -50,7 +52,15 @@ public class GameManager : MonoBehaviour
     
     public void WinEnemyStage()
     {
-        Debug.Log("You beat stage");
-        SceneManager.LoadScene("Main Scene");
+        if (canTeleport)
+        {
+            Debug.Log("You beat stage");
+            SceneManager.LoadScene("Main Scene");
+        }
+
+        else
+        {
+            Debug.Log("You beat stage");
+        } 
     }
 }
