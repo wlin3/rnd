@@ -27,6 +27,11 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(5);
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GameManager.Instance.DeleteSave();
+        }
     }
 
     public void TakeDamage(int damage)
