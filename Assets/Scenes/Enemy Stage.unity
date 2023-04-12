@@ -550,6 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPoints: 0
+  canTeleport: 0
 --- !u!1 &421712269
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,7 +3294,7 @@ PrefabInstance:
     - target: {fileID: 6894516367495052027, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6894516368872033009, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}

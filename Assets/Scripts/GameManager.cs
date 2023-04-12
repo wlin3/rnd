@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DeleteSave()
+    public void DeleteSaveFully()
     {
         // Delete the save data file from the persistent data path
         if (File.Exists(Application.persistentDataPath + "/gameData.dat")) // Change the filename and path to your preference
@@ -128,5 +128,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No save data found");
         }
+    }
+
+    public void DeleteRunData()
+    {
+        testPoints = 0;
+        canTeleport = true;
+        Debug.Log("Reset Run Data");
     }
 }

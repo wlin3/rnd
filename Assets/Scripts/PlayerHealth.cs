@@ -30,7 +30,12 @@ public class PlayerHealth : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U))
         {
-            GameManager.Instance.DeleteSave();
+            GameManager.Instance.DeleteSaveFully();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameManager.Instance.DeleteRunData();
         }
     }
 
