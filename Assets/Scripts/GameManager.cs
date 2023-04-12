@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class GameManager : MonoBehaviour
         testPoints += points;
         Debug.Log("You have " + testPoints + " points");
     }
-    // Rest of the GameManager script
-    // ...
+    
+    public void WinEnemyStage()
+    {
+        Debug.Log("You beat stage");
+        SceneManager.LoadScene("Main Scene");
+    }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,8 +45,12 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy();
         }
 
+        if (enemiesSpawned == maxEnemies && transform.childCount == 0)
+        {
+            GameManager.Instance.WinEnemyStage();// Call the WinEnemyStage method from the GameManager script
+        }
         // Debug log number of enemies on screen and number of enemies left to spawn
-        //Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
+        Debug.Log("Enemies on screen: " + transform.childCount + ", Enemies left to spawn: " + (maxEnemies - enemiesSpawned));
     }
 
     private void SpawnEnemy()
