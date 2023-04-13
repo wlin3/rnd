@@ -11,6 +11,7 @@ public class GameData
 {
     public int testPoints;
     public bool canTeleport;
+    public int stagesWon;
     // Add any other variables or upgrades you want to save/load
 }
 
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public int testPoints = 0;
 
     public bool canTeleport = true;
+
+    public int stagesWon;
 
     // Name of the GameManager GameObject
     private string mainGameManagerObjectName = "[Main] Game Manager"; // New name for the main GameManager object
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
         GameData data = new GameData();
         data.testPoints = testPoints;
         data.canTeleport = canTeleport;
+        data.stagesWon = stagesWon;
         // Add any other variables or upgrades you want to save
 
         // Serialize the data to binary format
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
             // Set the values from the loaded data
             testPoints = data.testPoints;
             canTeleport = data.canTeleport;
+            stagesWon = data.stagesWon;
             // Set any other variables or upgrades from the loaded data
         }
     }
@@ -101,6 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void WinEnemyStage()
     {
+        stagesWon += 1;
         if (canTeleport)
         {
             Debug.Log("You beat stage");
@@ -123,6 +129,7 @@ public class GameManager : MonoBehaviour
 
             testPoints = 0;
             canTeleport = true;
+            stagesWon = 0;
         }
         else
         {
@@ -134,6 +141,12 @@ public class GameManager : MonoBehaviour
     {
         testPoints = 0;
         canTeleport = true;
+        stagesWon = 0;
         Debug.Log("Reset Run Data");
+    }
+
+    public int GetWins()
+    {
+        return stagesWon;
     }
 }

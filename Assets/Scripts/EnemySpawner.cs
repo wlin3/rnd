@@ -15,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRadius = 10f;
     public float spawnDelay = 0.5f;
     private int numberOfEnemies;
+    private int numberOfWins;
 
     private int enemiesToSpawn;
     private int enemiesSpawned;
@@ -26,13 +27,22 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        numberOfEnemies = Random.Range(minEnemies, maxEnemies + 1);
+        numberOfWins = GameManager.Instance.GetWins();
+
+        numberOfEnemies = Random.Range(minEnemies + (3 * numberOfWins), maxEnemies + 1 + (5 * numberOfWins));
 
         // Calculate max number of enemies on screen based on maxEnemies
         maxEnemiesOnScreen = Mathf.CeilToInt(numberOfEnemies / 3f);
-
+        if(maxEnemiesOnScreen > 20)
+        {
+            maxEnemiesOnScreen = 20;
+        }
         // Calculate number of enemies to spawn in first frame
         enemiesToSpawn = Mathf.FloorToInt(numberOfEnemies / 5f);
+        if(enemiesToSpawn > 20)
+        {
+            enemiesToSpawn = 20;
+        }
 
         // Spawn initial enemies
         for (int i = 0; i < enemiesToSpawn; i++)

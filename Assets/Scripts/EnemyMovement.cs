@@ -11,6 +11,8 @@ public class EnemyMovement : MonoBehaviour
     public enemyType EnemyType;  // this public var should appear as a drop down
     public Transform player;
     public Transform target;
+    private int numberOfWins;
+    public float difficultyMultiplier = .05f;
     [Header("Chaser Setup")]
     public GameObject chaserSprite;
     public float chaserSpeed = 5f;
@@ -45,6 +47,7 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        numberOfWins = GameManager.Instance.GetWins();
         spriteTransform = transform;
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
@@ -61,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
         //EnemyType = enemyType.Shooter;
         if (EnemyType == enemyType.Shooter)
         {
-            enemyHealth.enemyMaxHealth = 30;
+            enemyHealth.enemyMaxHealth = Mathf.RoundToInt(30f * (1f + (difficultyMultiplier * numberOfWins))); // Explicit cast to int
             enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
             gameObject.name += "_Shooter";
             shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
@@ -71,7 +74,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else if(EnemyType == enemyType.Chaser)
         {
-            enemyHealth.enemyMaxHealth = 75;
+            enemyHealth.enemyMaxHealth = Mathf.RoundToInt(75f * (1f + (difficultyMultiplier * numberOfWins)));
             enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
             gameObject.name += "_Chaser";
             chaserSprite.SetActive(true);

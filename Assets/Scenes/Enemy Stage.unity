@@ -220,6 +220,7 @@ MonoBehaviour:
   EnemyType: 0
   player: {fileID: 0}
   target: {fileID: 0}
+  difficultyMultiplier: 0.05
   chaserSprite: {fileID: 0}
   chaserSpeed: 10
   chaserAcceleration: 2
@@ -467,6 +468,7 @@ MonoBehaviour:
   EnemyType: 0
   player: {fileID: 0}
   target: {fileID: 0}
+  difficultyMultiplier: 0.05
   chaserSprite: {fileID: 0}
   chaserSpeed: 10
   chaserAcceleration: 2
@@ -550,7 +552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPoints: 0
-  canTeleport: 0
+  canTeleport: 1
+  stagesWon: 0
 --- !u!1 &421712269
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &421712270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -965,6 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  difficultyMultiplier: 0.05
 --- !u!61 &617119381
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1374,6 +1378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  difficultyMultiplier: 0.05
 --- !u!61 &735348260
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3231,6 +3236,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 647275012}
+    - target: {fileID: 6894516367495052006, guid: cf09ededf54a6a34390dd99ff4561ca9,
+        type: 3}
+      propertyPath: EnemyType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6894516367495052007, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}
       propertyPath: m_RootOrder
@@ -3294,7 +3304,7 @@ PrefabInstance:
     - target: {fileID: 6894516367495052027, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6894516368872033009, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}

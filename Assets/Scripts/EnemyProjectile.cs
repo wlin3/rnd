@@ -14,7 +14,7 @@ public class EnemyProjectile : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * force;
+        //rb.velocity = rb.velocity.normalized * force; // Use rb.velocity.normalized instead of transform.right
         Destroy(gameObject, lifetime);
     }
 
@@ -23,7 +23,7 @@ public class EnemyProjectile : MonoBehaviour
         if (rb.velocity != Vector2.zero)
         {
             float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             // Flip the projectile horizontally
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * Mathf.Sign(rb.velocity.x), transform.localScale.y, transform.localScale.z);

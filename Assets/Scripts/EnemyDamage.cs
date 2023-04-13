@@ -6,8 +6,11 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     public int damage;
+    public float difficultyMultiplier = .05f;
     PlayerHealth playerHealth;
     EnemyMovement enemyMovement;
+    private int numberOfWins;
+    private int trueDamage;
 
     Player player;
     void Awake()
@@ -15,6 +18,11 @@ public class EnemyDamage : MonoBehaviour
         playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
         player = GameObject.Find("Player").GetComponent<Player>();
         enemyMovement = transform.parent.GetComponent<EnemyMovement>();
+    }
+
+    private void Start()
+    {
+        numberOfWins = GameManager.Instance.GetWins();
     }
     private void Reset()
     {
@@ -25,7 +33,8 @@ public class EnemyDamage : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            playerHealth.TakeDamage(damage);
+            trueDamage = Mathf.RoundToInt(damage * (1f + (difficultyMultiplier * numberOfWins)));
+            playerHealth.TakeDamage(trueDamage);
             enemyMovement.EnemyRetreat();
         }
     }
