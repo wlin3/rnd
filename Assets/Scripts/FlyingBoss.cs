@@ -4,66 +4,39 @@ using UnityEngine;
 
 public class FlyingBoss : MonoBehaviour
 {
-    public float speed = 10f;
-    public float dashDistance = 10f;
-    public float dashDuration = 0.5f;
-    public float dashCooldown = 2f;
-    public float dashHeight = 5f;
 
-    private Transform playerTransform;
-    private bool canDash = true;
 
-    private void Start()
+    private Transform playerTransform; // reference to the player's transform
+    private SpriteRenderer spriteRenderer; // reference to the enemy's sprite renderer
+
+    // Start is called before the first frame update
+    void Start()
     {
+        // find the player object and get its transform
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // get the enemy's sprite renderer component
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        if (canDash)
+        // calculate the direction to the player
+        Vector2 direction = (playerTransform.position - transform.position).normalized;
+
+        // calculate the rotation that the enemy needs to look at the player
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // check if the enemy should be flipped horizontally
+        if (angle > 90f || angle < -90f)
         {
-            // Calculate the direction towards the player
-            Vector3 direction = playerTransform.position - transform.position;
-            direction.y = 0f;
-
-            // Dash towards the player
-            StartCoroutine(Dash(direction.normalized));
-
-            // Reset dash cooldown
-            canDash = false;
-            Invoke(nameof(ResetDashCooldown), dashCooldown);
+            spriteRenderer.flipX = true;
+            angle += 180f;
         }
-    }
-
-    private IEnumerator Dash(Vector3 direction)
-    {
-        // Store the initial position
-        Vector3 initialPosition = transform.position;
-
-        // Calculate the target position
-        Vector3 targetPosition = transform.position + direction * dashDistance;
-        targetPosition.y = playerTransform.position.y;
-
-        // Calculate the duration of the dash
-        float dashTime = 0f;
-        while (dashTime < dashDuration)
+        else
         {
-            // Update the position of the enemy
-            transform.position = Vector3.Lerp(initialPosition, targetPosition, dashTime / dashDuration);
-
-            // Increment the dash time
-            dashTime += Time.deltaTime;
-
-            // Wait for the next frame
-            yield return null;
+            spriteRenderer.flipX = false;
         }
-
-        // Snap to the target position
-        transform.position = targetPosition;
-    }
-
-    private void ResetDashCooldown()
-    {
-        canDash = true;
     }
 }

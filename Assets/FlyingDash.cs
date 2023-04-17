@@ -4,56 +4,70 @@ using UnityEngine;
 
 public class FlyingDash : StateMachineBehaviour
 {
-    public float speed = 2.5f;
-
-
-	Transform player;
-	Rigidbody2D rb;
-	Boss boss;
-
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        private void ResetDashCooldown()
     {
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-		rb = animator.GetComponent<Rigidbody2D>();
-		boss = animator.GetComponent<Boss>();
+        canDash = true;
+    }
+    public float speed = 10f;
+    public float dashDistance = 10f;
+    public float dashDuration = 0.5f;
+    public float dashCooldown = 2f;
+    public float dashHeight = 5f;
 
-	}
+    private Transform playerTransform;
+    private bool canDash = true;
+    private MonoBehaviour script;
 
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        script = animator.GetComponent<MonoBehaviour>();
+    }
 
-        
-		Vector2 target = new Vector2(player.position.x, rb.position.y);
-		Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-		rb.MovePosition(newPos);
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (canDash)
+        ResetDashCooldown();
+        {
+            // Calculate the direction towards the player
+            Vector3 direction = playerTransform.position - animator.transform.position;
+            direction.y = 0f;
+
+            // Dash towards the player
+            script.StartCoroutine(Dash(animator, direction.normalized));
+
+            // Reset dash cooldown
+            canDash = false;
+            script.Invoke(nameof(ResetDashCooldown), dashCooldown);
+        }
+    }
+
+    private IEnumerator Dash(Animator animator, Vector3 direction)
+    {
+        // Store the initial position
+        Vector3 initialPosition = animator.transform.position;
+
+        // Calculate the target position
+        Vector3 targetPosition = animator.transform.position + direction * dashDistance;
+        targetPosition.y = playerTransform.position.y + dashHeight;
+
+        // Calculate the duration of the dash
+        float dashTime = 0f;
+        while (dashTime < dashDuration)
+        {
+            // Update the position of the enemy
+            animator.transform.position = Vector3.Lerp(initialPosition, targetPosition, dashTime / dashDuration);
+
+            // Increment the dash time
+            dashTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Snap to the target position
+        animator.transform.position = targetPosition;
+    }
 
 
-	}
-
-	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
-
-	}
-
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }
