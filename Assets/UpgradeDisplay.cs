@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using JetBrains.Annotations;
 
 public class UpgradeDisplay : MonoBehaviour
 {
@@ -16,13 +17,17 @@ public class UpgradeDisplay : MonoBehaviour
 
     public TMP_Text costText;
 
-    // Start is called before the first frame update
+    public int upgradeID;
+
+
+    // Start is called before the first frame update 
     public void Start()
     {
         nameText.text = upgradeCard.upgradeName;
         descriptionText.text = upgradeCard.description;
         artworkImage.sprite = upgradeCard.artwork;
         costText.text = upgradeCard.cost.ToString();
+        upgradeID = upgradeCard.upgradeID;
     }
 
     public void InitializeUpgradeDisplay(UpgradeCard upgradeCard)
@@ -31,6 +36,12 @@ public class UpgradeDisplay : MonoBehaviour
         descriptionText.text = upgradeCard.description;
         artworkImage.sprite = upgradeCard.artwork;
         costText.text = upgradeCard.cost.ToString();
+        upgradeID = upgradeCard.upgradeID;
+    }
+
+    public void OnClick()
+    {
+        Debug.Log(upgradeCard.upgradeName + " with id " + upgradeID + " was pressed");
     }
 
 
