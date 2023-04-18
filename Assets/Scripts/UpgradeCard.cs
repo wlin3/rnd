@@ -11,4 +11,6 @@ public class UpgradeCard : ScriptableObject
    public Sprite artwork;
 
    public int cost;
+
+   public int upgradeID;
 }

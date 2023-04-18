@@ -17,12 +17,21 @@ public class UpgradeDisplay : MonoBehaviour
     public TMP_Text costText;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         nameText.text = upgradeCard.upgradeName;
         descriptionText.text = upgradeCard.description;
         artworkImage.sprite = upgradeCard.artwork;
         costText.text = upgradeCard.cost.ToString();
     }
+
+    public void InitializeUpgradeDisplay(UpgradeCard upgradeCard)
+    {
+        nameText.text = upgradeCard.upgradeName;
+        descriptionText.text = upgradeCard.description;
+        artworkImage.sprite = upgradeCard.artwork;
+        costText.text = upgradeCard.cost.ToString();
+    }
+
 
 }
