@@ -20,18 +20,19 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
          if (enemyCurrentHealth > enemyMaxHealth)
-        {
+         {
             enemyCurrentHealth = enemyMaxHealth;
-        }
+         }
     }
 
     public void TakeDamageEnemy(int damage)
     {
         enemyCurrentHealth -= damage;
-        Debug.Log("Damaged Enemy");
+        //Debug.Log("Damaged Enemy");
         enemyMovement.TakeDamage(damage);
         if(enemyCurrentHealth <= 0)
         {
+            GameManager.Instance.AddPoints(1);
             Destroy(gameObject);
         }
     }

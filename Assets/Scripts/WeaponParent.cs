@@ -7,7 +7,6 @@ public class WeaponParent : MonoBehaviour
 {
     private Transform spriteTransform;
     public GameObject projectile;
-    public Transform projectileTransform;
     public bool canAttack;
     public float timer;
     public float timeBetweenFiring;

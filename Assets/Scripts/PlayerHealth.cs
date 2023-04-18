@@ -27,12 +27,22 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(5);
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            GameManager.Instance.DeleteSaveFully();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameManager.Instance.DeleteRunData();
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log("Damage");
+        //Debug.Log("Damage");
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)
         {

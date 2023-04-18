@@ -10,7 +10,11 @@ public class EnemyMovement : MonoBehaviour
     public enum enemyType { Chaser, Shooter, Flyer }
     public enemyType EnemyType;  // this public var should appear as a drop down
     public Transform player;
+    public Transform target;
+    private int numberOfWins;
+    public float difficultyMultiplier = .05f;
     [Header("Chaser Setup")]
+    public GameObject chaserSprite;
     public float chaserSpeed = 5f;
     public float chaserAcceleration = 10f;
     public float chaserDeceleration = 5f;
@@ -25,12 +29,58 @@ public class EnemyMovement : MonoBehaviour
     [HideInInspector] public bool retreating = false;
     [HideInInspector] public bool canRetreat = true;
     public float maxFlingForce = 15f;
+    public float chaserOvershootDistance = 10f;
+    public bool facingRight = true;
+    private Transform spriteTransform;
+    [Header("Shooter Setup")]
+    public GameObject shooterSprite;
+    public GameObject shooterProjectilePrefab;
+    public Transform shooterProjectileSpawnPoint;
+    public float shooterMaxDistance = 10f; // max distance from the player
+    public float shooterSpeed = 3f; // speed of the enemy when chasing
+    public float shooterAcceleration = 10f; // acceleration of the enemy when chasing
+    public float shooterAttackCooldownMin = 2f; // minimum time between attacks
+    public float shooterAttackCooldownMax = 4f; // maximum time between attacks
+    private float shooterAttackCooldownTimer; // timer for attack cooldown
+
+
     // Start is called before the first frame update
     void Start()
     {
+        numberOfWins = GameManager.Instance.GetWins();
+        spriteTransform = transform;
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Transform playerPosition = player.transform.Find("Player Position");
+            if (playerPosition != null)
+            {
+                target = playerPosition;
+            }
+        }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
-
+        //EnemyType = (enemyType)Random.Range(0, 2);
+        EnemyType = enemyType.Shooter;
+        if (EnemyType == enemyType.Shooter)
+        {
+            enemyHealth.enemyMaxHealth = Mathf.RoundToInt(30f * (1f + (difficultyMultiplier * numberOfWins))); // Explicit cast to int
+            enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
+            gameObject.name += "_Shooter";
+            shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+            chaserSprite.SetActive(false);
+            shooterSprite.SetActive(true);
+            //flyerSprite.SetActive(false);
+        }
+        else if(EnemyType == enemyType.Chaser)
+        {
+            enemyHealth.enemyMaxHealth = Mathf.RoundToInt(75f * (1f + (difficultyMultiplier * numberOfWins)));
+            enemyHealth.enemyCurrentHealth = enemyHealth.enemyMaxHealth;
+            gameObject.name += "_Chaser";
+            chaserSprite.SetActive(true);
+            shooterSprite.SetActive(false);
+            //flyerSprite.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -39,6 +89,11 @@ public class EnemyMovement : MonoBehaviour
         if (EnemyType == enemyType.Chaser)
         {
             Chaser();
+        }
+        
+        if (EnemyType == enemyType.Shooter)
+        {
+            Shooter();
         }
     }
 
@@ -49,38 +104,22 @@ public class EnemyMovement : MonoBehaviour
         {
             return;
         }
-        float distance = Vector2.Distance(transform.position, player.position);
+
+        float distance = Vector2.Distance(transform.position, target.position);
         
         // If the player is within range, chase the player
         if (distance <= chaserMaxDistance)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(chaserAcceleration * distance / chaserMaxDistance, chaserSpeed, chaserAcceleration);
 
-
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
-            //Debug.Log(newVelocity.ToString());
-            if (!retreating)
-            {
-                rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
-            }
-            //rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
-
-            // Flip the enemy sprite if necessary
-            if (direction.x > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (direction.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
 
             // Check if the enemy has overshot the player
-            if(Mathf.Sign(rb.velocity.x) != Mathf.Sign(direction.x) && Mathf.Abs(rb.velocity.x) > 50f)
+            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(direction.x) && Mathf.Abs(rb.velocity.x) > 50f)
             {
                 // Calculate the overshoot direction
                 Vector2 overshootDirection = (direction.x > 0) ? Vector2.right : Vector2.left;
@@ -88,7 +127,32 @@ public class EnemyMovement : MonoBehaviour
                 // Keep moving in the overshoot direction for a brief moment
                 rb.velocity = Vector2.MoveTowards(rb.velocity, overshootDirection * targetSpeed, chaserDeceleration * Time.deltaTime);
             }
+            else if (Mathf.Abs(target.position.x - transform.position.x) < 0.5f)
+            {
+                // If the enemy's x position is very close to the player's x position, keep moving in the current direction for a brief moment
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+                StartCoroutine(DecelerateAndTurnAround());
+            }
+            else
+            {
+                // Otherwise, move towards the player as normal
+                rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
+            }
 
+            // Flip the enemy sprite if necessary
+            if (direction.x < 0 && facingRight) 
+            {
+                facingRight = false;
+                spriteTransform.localScale = new Vector3(1, -1, 1);
+                transform.Rotate(0, 0, 180);
+                direction = new Vector2(-direction.x, -direction.y);
+            } 
+            else if(direction.x > 0 && !facingRight)
+            {
+                facingRight = true;
+                transform.Rotate(0, 0, 180);
+                spriteTransform.localScale = new Vector3(1, 1, 1);
+            }
 
             // Randomly jump if it's time to jump and the enemy is on the ground
             if (Time.time >= jumpTimer && IsGrounded() && Random.value <= chaserJumpChance)
@@ -115,7 +179,7 @@ public class EnemyMovement : MonoBehaviour
         {
             enemyHealth.isImmune = true;
             retreating = true;
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 direction = (target.position - transform.position).normalized;
             //Debug.Log("Flinging");
             // Jump backwards
             if (direction.x > 0)
@@ -146,7 +210,7 @@ public class EnemyMovement : MonoBehaviour
         float damagePercentage = damage / enemyHealth.enemyMaxHealth; // Assuming maxHealth is a known float value
         float flingForce = damagePercentage * maxFlingForce + 8f;
         // Calculate the direction from the player to the enemy
-        Vector2 attackDirection = (transform.position - player.position).normalized;
+        Vector2 attackDirection = (transform.position - target.position).normalized;
 
         // Apply the fling force in the direction of the attack
         if(attackDirection.x > 0)
@@ -159,5 +223,87 @@ public class EnemyMovement : MonoBehaviour
         }
         rb.velocity = new Vector2(rb.velocity.x, flingForce * .5f);
         Invoke("StopRetreat", chaserRetreatTime/2 + damagePercentage * 1.3f);
+    }
+
+    IEnumerator DecelerateAndTurnAround()
+    {
+        retreating = true;
+        // Wait for a brief moment before decelerating
+        yield return new WaitForSeconds(0.5f);
+
+        // Decelerate the enemy's horizontal velocity
+        float decelerationAmount = chaserDeceleration * Time.deltaTime;
+        float newXVelocity = Mathf.MoveTowards(rb.velocity.x, 0f, decelerationAmount);
+        rb.velocity = new Vector2(newXVelocity, rb.velocity.y);
+        
+
+        // Wait for another brief moment before turning around
+        //yield return new WaitForSeconds(0.2f);
+
+        // Turn the enemy around
+        //Vector3 newScale = transform.localScale;
+        //newScale.x = -newScale.x;
+        //transform.localScale = newScale;
+        StopRetreat();
+    }
+
+    void Shooter()
+    {
+         float distance = Vector2.Distance(transform.position, target.position);
+         Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+
+        // If the player is within range, shoot at the player
+        if (distance <= shooterMaxDistance)
+        {
+            // Update attack cooldown timer
+            shooterAttackCooldownTimer -= Time.deltaTime;
+
+            // If attack cooldown has elapsed, shoot at the player
+            if (shooterAttackCooldownTimer <= 0)
+            {
+                ShootAtTarget(target.position);
+
+                // Reset attack cooldown timer
+                shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+            }
+        }
+
+        // If the player is out of range, move towards the player
+        else
+        {
+            //Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+
+            // Calculate the speed of the enemy based on the distance to the player
+            float targetSpeed = Mathf.Clamp(shooterAcceleration * distance / shooterMaxDistance, shooterSpeed, shooterAcceleration);
+
+            // Move towards the player
+            Vector2 newVelocity = direction * targetSpeed;
+            rb.velocity = newVelocity;
+        }
+        
+        if (direction.x < 0 && facingRight) 
+        {
+            facingRight = false;
+            spriteTransform.localScale = new Vector3(1, -1, 1);
+            transform.Rotate(0, 0, 180);
+            direction = new Vector2(-direction.x, -direction.y);
+        } 
+        else if(direction.x > 0 && !facingRight)
+        {
+            facingRight = true;
+            transform.Rotate(0, 0, 180);
+            spriteTransform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    void ShootAtTarget(Vector2 targetPosition)
+    {
+        // Create projectile and set its position and rotation
+        GameObject newProjectile = Instantiate(shooterProjectilePrefab, shooterProjectileSpawnPoint.position, Quaternion.identity);
+        newProjectile.transform.right = targetPosition - (Vector2)transform.position;
+
+        // Add force to the projectile in the direction of the player
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        newProjectile.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
     }
 }

@@ -12,6 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Enemy Stage.unity
     guid: 0ac4997ef29714a4483fa9438911f883
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/BossStage.unity
     guid: 7a671ef4c11a25042b62b9a95d0c64f8
+=======
+    path: Assets/Scenes/Load Scene.unity
+    guid: 4e0c5efee29209341a53df975b1ab68c
+>>>>>>> main
   m_configObjects: {}
