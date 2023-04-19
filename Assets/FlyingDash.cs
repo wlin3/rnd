@@ -45,7 +45,7 @@ public class FlyingDash : StateMachineBehaviour
 
         // Calculate the target position
         Vector3 targetPosition = animator.transform.position + direction * dashDistance;
-        targetPosition.y = playerTransform.position.y;
+        targetPosition.y = playerTransform.position.y - 3;
 
         // Calculate the duration of the dash
         float dashTime = 0f;

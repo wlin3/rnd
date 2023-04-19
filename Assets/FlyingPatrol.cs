@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlyingPatrol : StateMachineBehaviour
 {
-    public float speed = 5f;
+    public float speed = 1f;
 
     private Transform playerTransform;
 

@@ -36,6 +36,7 @@ public class FlyingIdle : StateMachineBehaviour
             // Reset dash cooldown
             canDash = false;
         }
+        
     }
 
     private IEnumerator Dash(Animator animator, Vector3 direction)
