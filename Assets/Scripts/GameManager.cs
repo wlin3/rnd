@@ -28,9 +28,7 @@ public class GameManager : MonoBehaviour
 
     public int stagesWon;
 
-    public int upgradePoints;
-
-    public GameObject upgradeMenu;
+    private int upgradeID;
 
     // Name of the GameManager GameObject
     private string mainGameManagerObjectName = "[Main] Game Manager"; // New name for the main GameManager object
@@ -162,6 +160,7 @@ public class GameManager : MonoBehaviour
 
     public void ClickTest()
     {
-        Debug.Log("Button Clicked");
+        UpgradeButton upgradeButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<UpgradeButton>();
+        Debug.Log("Upgrade with ID " + upgradeButton.upgrade.upgradeID.ToString() + " was pressed");
     }
 }

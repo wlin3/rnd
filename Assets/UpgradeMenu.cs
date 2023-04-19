@@ -1,43 +1,79 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
 {
-    public UpgradeSlot upgradeSlotPrefab;
-    public int numUpgradeSlots;
-    private List<(string, Sprite, string, int)> availableUpgrades = new List<(string, Sprite, string, int)>()
-    {
-        ("Upgrade A", spriteA, "This upgrade does X", 10),
-        ("Upgrade B", spriteB, "This upgrade does Y", 20),
-        ("Upgrade C", spriteC, "This upgrade does Z", 30),
-        // Add more upgrades here...
-    };
-    private List<UpgradeSlot> upgradeSlots = new List<UpgradeSlot>();
+    public UpgradeCard[] commonUpgrades;
+    public UpgradeCard[] rareUpgrades;
+    public UpgradeCard[] legendaryUpgrades;
 
+    public UpgradeDisplay[] upgradeDisplays;
+
+    // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < numUpgradeSlots; i++)
+        List<UpgradeCard> uniqueUpgrades = GetUniqueUpgrades();
+
+        // Assign the upgrade scriptable objects to the UpgradeDisplays
+        for (int i = 0; i < uniqueUpgrades.Count; i++)
         {
-            // Get a random upgrade from the available upgrades list
-            (string upgradeName, Sprite upgradeSprite, string upgradeDescription, int upgradeCost) = availableUpgrades[Random.Range(0, availableUpgrades.Count)];
-            availableUpgrades.Remove((upgradeName, upgradeSprite, upgradeDescription, upgradeCost));
-
-            // Instantiate an UpgradeSlot prefab and set its upgrade information
-            UpgradeSlot upgradeSlot = Instantiate(upgradeSlotPrefab, transform);
-            upgradeSlot.SetUpgrade(upgradeName, upgradeSprite, upgradeDescription, upgradeCost);
-
-            // Add the instantiated UpgradeSlot to the list of UpgradeSlots
-            upgradeSlots.Add(upgradeSlot);
+            upgradeDisplays[i].upgradeCard = uniqueUpgrades[i];
+            upgradeDisplays[i].Start();
         }
     }
 
-    public void ConfirmUpgrades()
+    public List<UpgradeCard> GetUniqueUpgrades()
     {
-        foreach (UpgradeSlot upgradeSlot in upgradeSlots)
+        // Create a list of all available upgrades
+        List<UpgradeCard> allUpgrades = new List<UpgradeCard>();
+
+        // Add common upgrades
+        for (int i = 0; i < commonUpgrades.Length; i++)
         {
-            upgradeSlot.BuyUpgrade();
+            allUpgrades.Add(commonUpgrades[i]);
         }
-        upgradeSlots.Clear();
+
+        // Add rare upgrades
+        for (int i = 0; i < rareUpgrades.Length; i++)
+        {
+            allUpgrades.Add(rareUpgrades[i]);
+        }
+
+        // Add legendary upgrades
+        for (int i = 0; i < legendaryUpgrades.Length; i++)
+        {
+            allUpgrades.Add(legendaryUpgrades[i]);
+        }
+
+        // Randomly select 3 unique upgrades with different rarities
+        List<UpgradeCard> uniqueUpgrades = new List<UpgradeCard>();
+        while (uniqueUpgrades.Count < 3 && allUpgrades.Count > 0)
+        {
+            int randomValue = Random.Range(0, 100);
+            UpgradeCard randomUpgrade = null;
+
+            if (randomValue < 60) // 60% chance of selecting a common upgrade
+            {
+                randomUpgrade = commonUpgrades[Random.Range(0, commonUpgrades.Length)];
+            }
+            else if (randomValue < 80) // 20% chance of selecting a rare upgrade
+            {
+                randomUpgrade = rareUpgrades[Random.Range(0, rareUpgrades.Length)];
+            }
+            else // 10% chance of selecting a legendary upgrade
+            {
+                randomUpgrade = legendaryUpgrades[Random.Range(0, legendaryUpgrades.Length)];
+            }
+
+            if (!uniqueUpgrades.Contains(randomUpgrade))
+            {
+                uniqueUpgrades.Add(randomUpgrade);
+            }
+
+            allUpgrades.Remove(randomUpgrade);
+        }
+
+        return uniqueUpgrades;
     }
+
 }
