@@ -12,6 +12,7 @@ public class GameData
     public int testPoints;
     public bool canTeleport;
     public int stagesWon;
+    public int upgradePoints;
     // Add any other variables or upgrades you want to save/load
 }
 
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour
         data.testPoints = testPoints;
         data.canTeleport = canTeleport;
         data.stagesWon = stagesWon;
+        data.upgradePoints = upgradePoints;
         // Add any other variables or upgrades you want to save
 
         // Serialize the data to binary format
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
             testPoints = data.testPoints;
             canTeleport = data.canTeleport;
             stagesWon = data.stagesWon;
+            upgradePoints = data.upgradePoints;
             // Set any other variables or upgrades from the loaded data
         }
     }
@@ -117,7 +120,8 @@ public class GameManager : MonoBehaviour
 
         else
         {
-            Debug.Log("You beat stage");
+            upgradeMenu.SetActive(true);
+            //Debug.Log("You beat stage");
         }
     }
 
@@ -130,8 +134,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("Save data deleted");
 
             testPoints = 0;
-            canTeleport = true;
+            canTeleport = false;
             stagesWon = 0;
+            upgradePoints = 100;
         }
         else
         {
@@ -142,8 +147,9 @@ public class GameManager : MonoBehaviour
     public void DeleteRunData()
     {
         testPoints = 0;
-        canTeleport = true;
+        canTeleport = false;
         stagesWon = 0;
+        upgradePoints = 100;
         Debug.Log("Reset Run Data");
     }
 
