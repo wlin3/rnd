@@ -418,12 +418,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2675080db12d34a8f965f7e2736357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  canAttack: 0
+  projectile: {fileID: 1556172051762816665, guid: e42b72a885fdef94583eb98864416ecd,
+    type: 3}
+  canAttack: 1
   timer: 0
-  timeBetweenFiring: 0
+  timeBetweenFiring: 0.15
   offSet: 0
-  projectileSpawnPoint: {fileID: 0}
+  projectileSpawnPoint: {fileID: 179665699}
 --- !u!1 &670137878
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9afb76712e1d29c47b6d9062e91f48e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1409601163151742868, guid: 16ce3ae45c3cf6749affa35b3ddbac5e, type: 3}
 --- !u!114 &1236359264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,7 +855,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58516d7524c161a43b4deba67a68a35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
+  weapons:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1236359265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,7 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealth: 100
+  currentHealth: 0
   healthBar: {fileID: 0}
 --- !u!114 &1236359266
 MonoBehaviour:
@@ -883,14 +886,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  jumpForce: 5
-  initialJumpForce: 5
+  jumpForce: 16
+  initialJumpForce: 8
   feetPos: {fileID: 1263039988}
-  checkRadius: 5
+  checkRadius: 0.1
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
-  jumpTime: 5
+    m_Bits: 64
+  jumpTime: 0.15
 --- !u!114 &1236359267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,7 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e291bc779674a469c0eed4067df0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkspeed: 5
+  walkspeed: 12
   rb: {fileID: 0}
 --- !u!61 &1236359268
 BoxCollider2D:
@@ -1157,8 +1160,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790236211}
   m_LocalRotation: {x: 0.008536097, y: 0.01176576, z: 0.01634999, w: 0.9997607}
-  m_LocalPosition: {x: -1.62, y: 3.49, z: -0.17691666}
-  m_LocalScale: {x: 2.9691, y: 3.0275998, z: 1}
+  m_LocalPosition: {x: -1.6183, y: 3.4365, z: -0.1779}
+  m_LocalScale: {x: 2.9691, y: 3.1178224, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1466,9 +1469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2675080db12d34a8f965f7e2736357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  canAttack: 0
-  timer: 5
-  timeBetweenFiring: 5
-  offSet: 5
-  projectileSpawnPoint: {fileID: 0}
+  projectile: {fileID: 2341051598690399453, guid: 82f54d41a9f4144429f60048fcc48bc6,
+    type: 3}
+  canAttack: 1
+  timer: 0
+  timeBetweenFiring: 0.5
+  offSet: 0
+  projectileSpawnPoint: {fileID: 967309821}

@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class FlyingDash : StateMachineBehaviour
 {
-        private void ResetDashCooldown()
-    {
-        canDash = true;
-    }
+
     public float speed = 10f;
     public float dashDistance = 10f;
     public float dashDuration = 0.5f;
@@ -27,7 +24,7 @@ public class FlyingDash : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (canDash)
-        ResetDashCooldown();
+        canDash = true;        
         {
             // Calculate the direction towards the player
             Vector3 direction = playerTransform.position - animator.transform.position;
@@ -38,7 +35,6 @@ public class FlyingDash : StateMachineBehaviour
 
             // Reset dash cooldown
             canDash = false;
-            script.Invoke(nameof(ResetDashCooldown), dashCooldown);
         }
     }
 
@@ -49,7 +45,7 @@ public class FlyingDash : StateMachineBehaviour
 
         // Calculate the target position
         Vector3 targetPosition = animator.transform.position + direction * dashDistance;
-        targetPosition.y = playerTransform.position.y + dashHeight;
+        targetPosition.y = playerTransform.position.y;
 
         // Calculate the duration of the dash
         float dashTime = 0f;
