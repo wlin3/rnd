@@ -84,11 +84,13 @@ public class UpgradeMenu : MonoBehaviour
 
     public void ShowUpgradeMenu()
     {
+        Debug.Log("Tried to show upgrade gui");
         gameObject.SetActive(true);
     }
 
     public void HideUpgradeMenu()
     {
+        Debug.Log("Tried to hide upgrade gui");
         gameObject.SetActive(false);
     }
 

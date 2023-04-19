@@ -14,13 +14,13 @@ public class MainGui : MonoBehaviour
 
     public void HideGUi()
     {
-        Debug.Log("Tried to hide the gui");
+        Debug.Log("Tried to hide Menu Gui");
         gameObject.SetActive(false);
     }
 
     public void ShowGui()
     {
         gameObject.SetActive(true);
-        Debug.Log("Tried to show the gui");
+        Debug.Log("Tried to show Menu Gui");
     }
 }

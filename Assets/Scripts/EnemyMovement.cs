@@ -60,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
-        //EnemyType = (enemyType)Random.Range(0, 2);
-        EnemyType = enemyType.Shooter;
+        EnemyType = (enemyType)Random.Range(0, 2);
+        //EnemyType = enemyType.Shooter;
         if (EnemyType == enemyType.Shooter)
         {
             enemyHealth.enemyMaxHealth = Mathf.RoundToInt(30f * (1f + (difficultyMultiplier * numberOfWins))); // Explicit cast to int
