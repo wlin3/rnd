@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class UpgradeMenu : MonoBehaviour
 {
+    public static UpgradeMenu instance;
     public UpgradeCard[] commonUpgrades;
     public UpgradeCard[] rareUpgrades;
     public UpgradeCard[] legendaryUpgrades;
@@ -12,6 +13,8 @@ public class UpgradeMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
         List<UpgradeCard> uniqueUpgrades = GetUniqueUpgrades();
 
         // Assign the upgrade scriptable objects to the UpgradeDisplays
@@ -20,6 +23,8 @@ public class UpgradeMenu : MonoBehaviour
             upgradeDisplays[i].upgradeCard = uniqueUpgrades[i];
             upgradeDisplays[i].Start();
         }
+
+        gameObject.SetActive(false);
     }
 
     public List<UpgradeCard> GetUniqueUpgrades()
@@ -74,6 +79,17 @@ public class UpgradeMenu : MonoBehaviour
         }
 
         return uniqueUpgrades;
+    }
+
+
+    public void ShowUpgradeMenu()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void HideUpgradeMenu()
+    {
+        gameObject.SetActive(false);
     }
 
 }

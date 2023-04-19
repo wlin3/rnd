@@ -42,6 +42,7 @@ public class UpgradeDisplay : MonoBehaviour
     public void OnClick()
     {
         Debug.Log(upgradeCard.upgradeName + " with id " + upgradeID + " was pressed");
+
     }
 
 

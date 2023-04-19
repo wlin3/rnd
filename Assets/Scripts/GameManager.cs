@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     private int upgradeID;
 
+    public int upgradePoints;
+
     // Name of the GameManager GameObject
     private string mainGameManagerObjectName = "[Main] Game Manager"; // New name for the main GameManager object
 
@@ -114,14 +116,15 @@ public class GameManager : MonoBehaviour
         stagesWon += 1;
         if (canTeleport)
         {
-            Debug.Log("You beat stage");
-            SceneManager.LoadScene("Main Scene");
-        }
+            // Hide the main GUI
+            MainGui.instance.HideGUi();
 
+            // Show the upgrade menu
+            UpgradeMenu.instance.ShowUpgradeMenu();
+        }
         else
         {
-            upgradeMenu.SetActive(true);
-            //Debug.Log("You beat stage");
+            Debug.Log("You beat stage");
         }
     }
 
@@ -162,5 +165,7 @@ public class GameManager : MonoBehaviour
     {
         UpgradeButton upgradeButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<UpgradeButton>();
         Debug.Log("Upgrade with ID " + upgradeButton.upgrade.upgradeID.ToString() + " was pressed");
+        
+        
     }
 }

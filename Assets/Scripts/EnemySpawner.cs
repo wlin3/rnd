@@ -25,6 +25,8 @@ public class EnemySpawner : MonoBehaviour
 
     private int enemyCount = 0;
 
+    private bool winCheck = false;
+
     private void Start()
     {
         numberOfWins = GameManager.Instance.GetWins();
@@ -59,9 +61,10 @@ public class EnemySpawner : MonoBehaviour
             SpawnEnemy();
         }
 
-        if (enemiesSpawned == numberOfEnemies && transform.childCount == 0)
+        if (enemiesSpawned == numberOfEnemies && transform.childCount == 0 && !winCheck)
         {
             GameManager.Instance.WinEnemyStage();// Call the WinEnemyStage method from the GameManager script
+            winCheck = true;
         }
         // Debug log number of enemies on screen and number of enemies left to spawn
         enemyText.text = "Enemies Left: " + (transform.childCount + numberOfEnemies - enemiesSpawned);
