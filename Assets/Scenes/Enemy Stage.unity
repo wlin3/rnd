@@ -2356,6 +2356,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 1733217016}
+  player: {fileID: 701265843}
 --- !u!114 &701265853
 MonoBehaviour:
   m_ObjectHideFlags: 0
