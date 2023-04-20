@@ -7,10 +7,21 @@ public class UpgradeManager : MonoBehaviour
     PlayerHealth playerHealth;
     HealthBar healthBar;
     public void Update()
+{
+    playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+
+    // Check if the health bar exists in the scene
+    GameObject healthBarObj = GameObject.Find("Main Gui");
+    if (healthBarObj != null)
     {
-        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        healthBar = GameObject.Find("Main Gui").GetComponentInChildren<HealthBar>();
+        healthBar = healthBarObj.GetComponentInChildren<HealthBar>();
     }
+    else
+    {
+       return;
+    }
+}
+
     public void ApplyUpgrade(int upgradeId)
     {
         switch (upgradeId)

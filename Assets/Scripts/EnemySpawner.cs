@@ -102,8 +102,17 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
         Vector3 spawnPoint = player.transform.position + new Vector3(randomDirection.x, 0f, 0f) * spawnRadius;
+        
+        // Keep generating random spawn positions until the enemy is at least 30 units away from the player
+        while (Vector3.Distance(spawnPoint, player.transform.position) < 30f)
+        {
+            randomDirection = Random.insideUnitCircle.normalized;
+            spawnPoint = player.transform.position + new Vector3(randomDirection.x, 0f, 0f) * spawnRadius;
+        }
+
         return spawnPoint;
     }
+
 
     private void OnValidate()
     {
