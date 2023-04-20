@@ -19,10 +19,6 @@ public class FlyingDash : StateMachineBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         script = animator.GetComponent<MonoBehaviour>();
-    }
-
-    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
         if (canDash)
         canDash = true;        
         {
@@ -38,6 +34,11 @@ public class FlyingDash : StateMachineBehaviour
         }
     }
 
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
+    }
+
     private IEnumerator Dash(Animator animator, Vector3 direction)
     {
         // Store the initial position
@@ -45,7 +46,7 @@ public class FlyingDash : StateMachineBehaviour
 
         // Calculate the target position
         Vector3 targetPosition = animator.transform.position + direction * dashDistance;
-        targetPosition.y = playerTransform.position.y - 3;
+        targetPosition.y = playerTransform.position.y -5;
 
         // Calculate the duration of the dash
         float dashTime = 0f;
