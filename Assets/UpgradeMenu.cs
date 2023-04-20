@@ -86,12 +86,14 @@ public class UpgradeMenu : MonoBehaviour
     {
         Debug.Log("Tried to show upgrade gui");
         gameObject.SetActive(true);
+        GameManager.Instance.SystemPause(true);
     }
 
     public void HideUpgradeMenu()
     {
         Debug.Log("Tried to hide upgrade gui");
         gameObject.SetActive(false);
+        GameManager.Instance.SystemPause(false);
     }
 
 }

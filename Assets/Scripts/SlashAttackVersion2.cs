@@ -44,14 +44,18 @@ public class SlashAttackVersion2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = mousePosition - playerTransform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        direction.z = 0;
-        direction.Normalize();
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.position = projectileLocation.position;
-        transform.SetParent(projectileLocation, true);
+        if(!GameManager.Instance.isPaused)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = mousePosition - playerTransform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            direction.z = 0;
+            direction.Normalize();
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.position = projectileLocation.position;
+            transform.SetParent(projectileLocation, true);
+        }
+       
     }
     private void OnDestroy()
     {

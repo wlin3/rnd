@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)
         {
-            Destroy(player);
+            //Destroy(player);
             currentHealth = maxHealth;
             healthBar.SetHealth(currentHealth);
         }
