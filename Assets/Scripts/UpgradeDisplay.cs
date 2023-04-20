@@ -19,6 +19,8 @@ public class UpgradeDisplay : MonoBehaviour
 
     public int upgradeID;
 
+    private UpgradeManager upgradeManager;
+
 
     // Start is called before the first frame update 
     public void Start()
@@ -28,6 +30,8 @@ public class UpgradeDisplay : MonoBehaviour
         artworkImage.sprite = upgradeCard.artwork;
         costText.text = upgradeCard.cost.ToString();
         upgradeID = upgradeCard.upgradeID;
+
+        upgradeManager = GameObject.FindObjectOfType<UpgradeManager>();
     }
 
     public void InitializeUpgradeDisplay(UpgradeCard upgradeCard)
@@ -42,6 +46,7 @@ public class UpgradeDisplay : MonoBehaviour
     public void OnClick()
     {
         Debug.Log(upgradeCard.upgradeName + " with id " + upgradeID + " was pressed");
+        upgradeManager.ApplyUpgrade(upgradeID);
 
     }
 
