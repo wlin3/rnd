@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlashAttackVersion2 : MonoBehaviour
 {
-    public int damage = 10;
+    public float damage = 10f;
     private bool facingRight = true;
     public float lifetime = 2f; // set the lifetime of the projectile
     private Transform playerTransform;

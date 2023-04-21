@@ -209,6 +209,10 @@ public class EnemyMovement : MonoBehaviour
         // Calculate the fling force based on the damage percentage
         float damagePercentage = damage / enemyHealth.enemyMaxHealth; // Assuming maxHealth is a known float value
         float flingForce = damagePercentage * maxFlingForce + 8f;
+        if (EnemyType == enemyType.Shooter)
+        {
+            flingForce *= .45f;
+        }
         // Calculate the direction from the player to the enemy
         Vector2 attackDirection = (transform.position - target.position).normalized;
 

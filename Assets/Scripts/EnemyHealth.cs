@@ -25,9 +25,9 @@ public class EnemyHealth : MonoBehaviour
          }
     }
 
-    public void TakeDamageEnemy(int damage)
+    public void TakeDamageEnemy(float damage)
     {
-        enemyCurrentHealth -= damage;
+        enemyCurrentHealth -= (int)damage;
         //Debug.Log("Damaged Enemy");
         enemyMovement.TakeDamage(damage);
         if(enemyCurrentHealth <= 0)

@@ -31,11 +31,15 @@ public class EnemySpawner : MonoBehaviour
     {
         numberOfWins = GameManager.Instance.GetWins();
 
-        numberOfEnemies = Random.Range(minEnemies + (3 * numberOfWins), maxEnemies + 1 + (5 * numberOfWins));
+        numberOfEnemies = Random.Range(minEnemies + (5 * numberOfWins), maxEnemies + 1 + (8 * numberOfWins));
 
         // Calculate max number of enemies on screen based on maxEnemies
         maxEnemiesOnScreen = Mathf.CeilToInt(numberOfEnemies / 3f);
-        if(maxEnemiesOnScreen > 20)
+        if (maxEnemiesOnScreen < 5)
+        {
+            maxEnemiesOnScreen = 5;
+        }
+        else if(maxEnemiesOnScreen > 20)
         {
             maxEnemiesOnScreen = 20;
         }

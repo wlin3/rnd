@@ -7,11 +7,15 @@ public class WeaponParent : MonoBehaviour
 {
     private Transform spriteTransform;
     public GameObject projectile;
+    public GameObject chargedProjectile;
     public bool canAttack;
     public float timer;
     public float timeBetweenFiring;
+    public float chargedAttackCooldown;
     public float offSet;
     public Transform projectileSpawnPoint;
+    public bool isMelee;
+    public bool chargedAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,12 +41,28 @@ public class WeaponParent : MonoBehaviour
             {
                 canAttack = true;
                 timer = 0;
+                chargedAttack = false;
             }
         }
 
-        if (Input.GetMouseButton(0) && canAttack && !GameManager.Instance.isPaused)
+        if(canAttack && isMelee)
+        {
+            timer += Time.deltaTime;
+            if(timer > chargedAttackCooldown)
+            {
+                chargedAttack = true;
+                timer = 0;
+            }
+        }
+
+        if (Input.GetMouseButton(0) && canAttack && !GameManager.Instance.isPaused && !chargedAttack)
         {
             SlashAttack();
+        }
+
+        if (Input.GetMouseButton(0) && canAttack && !GameManager.Instance.isPaused && chargedAttack)
+        {
+            ChargedAttack();
         }
     }
 
@@ -59,5 +79,20 @@ public class WeaponParent : MonoBehaviour
         
         canAttack = false;
         Instantiate(projectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+    }
+
+    void ChargedAttack()
+    {
+        // Get mouse position in world space
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Calculate direction from weapon to mouse
+        Vector3 direction = mousePosition - spriteTransform.position;
+
+        // Calculate offset based on weapon rotation
+        Vector3 spawnOffset = transform.right * offSet;
+        
+        canAttack = false;
+        Instantiate(chargedProjectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
     }
 }

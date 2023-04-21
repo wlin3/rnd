@@ -139,3 +139,4 @@ MonoBehaviour:
   damage: 5000
   force: 25
   lifetime: 3
+  rotationDegree: 270

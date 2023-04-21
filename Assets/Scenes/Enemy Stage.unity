@@ -1006,8 +1006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6894516367495052027, guid: cf09ededf54a6a34390dd99ff4561ca9,
     type: 3}
-  minEnemies: 10
-  maxEnemies: 45
+  minEnemies: 5
+  maxEnemies: 10
   spawnRadius: 50
   spawnDelay: 3
   player: {fileID: 701265843}
@@ -2605,11 +2605,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 1556172051762816665, guid: e42b72a885fdef94583eb98864416ecd,
     type: 3}
+  chargedProjectile: {fileID: 0}
   canAttack: 1
   timer: 0
   timeBetweenFiring: 1.5
+  chargedAttackCooldown: 0
   offSet: 0
   projectileSpawnPoint: {fileID: 531485638}
+  isMelee: 0
+  chargedAttack: 0
 --- !u!1 &794244036
 GameObject:
   m_ObjectHideFlags: 0
@@ -5823,7 +5827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2019908484
 Transform:
   m_ObjectHideFlags: 0
@@ -5853,13 +5857,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2675080db12d34a8f965f7e2736357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 2341051598690399453, guid: 82f54d41a9f4144429f60048fcc48bc6,
+  projectile: {fileID: 5353772727569772600, guid: 2d3b4bd4dd164104db45d95c7d5dd4a4,
+    type: 3}
+  chargedProjectile: {fileID: 2341051598690399453, guid: 5f6cdd755b1f7f54b92601c62be439e5,
     type: 3}
   canAttack: 1
   timer: 0
   timeBetweenFiring: 0.5
+  chargedAttackCooldown: 2
   offSet: 0
   projectileSpawnPoint: {fileID: 732310254}
+  isMelee: 1
+  chargedAttack: 0
 --- !u!4 &2046462760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4158928206705392575, guid: e1657b3454945c845bf51a306ea5997e,
