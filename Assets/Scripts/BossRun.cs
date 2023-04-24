@@ -4,39 +4,48 @@ using UnityEngine;
 
 public class BossRun : StateMachineBehaviour
 {
-    
+    private Transform playerTransform;
+    public float followDistance = 5f;
+    public float followSpeed = 2f;
 
-	public float speed = 2.5f;
-	public float attackRange = 3f;
+    private bool isFollowing;
 
-	Transform player;
-	Rigidbody2D rb;
-	Boss boss;
-
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-		rb = animator.GetComponent<Rigidbody2D>();
-		boss = animator.GetComponent<Boss>();
+        // Start following the player when this state is entered
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        isFollowing = true;
+    }
 
-	}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        // Calculate the distance to the player
+        float distanceToPlayer = Vector3.Distance(playerTransform.position, animator.transform.position);
 
-	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
+        // If the player is within the follow distance, start following
+        if (distanceToPlayer <= followDistance)
+        {
+            isFollowing = false;
+        }
+		else
+		{
+			isFollowing = true;
+		}
 
-        
-		Vector2 target = new Vector2(player.position.x, rb.position.y);
-		Vector2 newPos = Vector2.MoveTowards(rb.position, target, speed * Time.fixedDeltaTime);
-		rb.MovePosition(newPos);
+        // If the enemy is following the player, move towards them
+        if (isFollowing)
+        {
+            // Calculate the direction to the player
+            Vector3 directionToPlayer = playerTransform.position - animator.transform.position;
 
+            // Move towards the player
+            animator.transform.Translate(directionToPlayer.normalized * Time.deltaTime * followSpeed, Space.World);
+        }
+    }
 
-	}
-
-	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
-
-	}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        // Stop following the player when this state is exited
+        isFollowing = false;
+    }
 }
