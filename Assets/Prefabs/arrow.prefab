@@ -138,5 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5000
   force: 25
-  lifetime: 3
   rotationDegree: 270
+  canDecelerate: 0
+  distance: 100
+  decelerationTime: 0
+  lingerTime: 5

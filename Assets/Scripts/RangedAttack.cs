@@ -8,10 +8,20 @@ public class RangedAttack : MonoBehaviour
     private Rigidbody2D rb;
     public float force;
     private bool facingRight = true;
-    public float lifetime = 2f; // set the lifetime of the projectile
-    public float rotationDegree = 0f; // Set rotaion for each projectile
+    public float rotationDegree = 0f; // Set rotation for each projectile
+
+    public bool canDecelerate;
+    public float distance;
+    public float decelerationTime;
+    public float lingerTime;
+
     private List<Collider2D> hitEnemies = new List<Collider2D>();
 
+    private float initialSpeed;
+    private float decelerationRate;
+    private float decelerationDistance;
+    private bool isDecelerating;
+    private float lingerTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -19,51 +29,64 @@ public class RangedAttack : MonoBehaviour
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
         rb = GetComponent<Rigidbody2D>();
-        
-        
+
         Vector3 rotation = transform.position - mousePosition;
         rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         if (direction.x < 0 && facingRight)
         {
             facingRight = false;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1, transform.localScale.y, transform.localScale.z);
-            transform.Rotate(0, 0, 180);
-            direction = new Vector2(-direction.x, -direction.y);
-            rotationDegree = -rotationDegree; // add this line
         }
 
         else if (direction.x > 0 && !facingRight)
         {
             facingRight = true;
-            transform.Rotate(0, 0, 180);
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        transform.rotation = Quaternion.Euler(0, 0, rot+rotationDegree);
+        Debug.Log(facingRight);
+        transform.rotation = Quaternion.Euler(0, 0, rot + rotationDegree);
 
-        Destroy(gameObject, lifetime);
+        if (canDecelerate)
+        {
+            initialSpeed = force;
+            decelerationRate = initialSpeed / decelerationTime;
+            decelerationDistance = distance / 2f;
+            isDecelerating = false;
+            lingerTimer = 0f;
+        }
+
+        Destroy(gameObject, distance / force);
     }
 
     void Update()
     {
-        if (rb.velocity != Vector2.zero)
+        // Calculate the angle between the current velocity and the x-axis
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+        
+        // Update the rotation of the sprite
+        transform.rotation = Quaternion.AngleAxis(angle + rotationDegree, Vector3.forward);
+        if (canDecelerate && !isDecelerating)
         {
-            if (facingRight && transform.localScale.x < 0)
-            {
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-            else if (!facingRight && transform.localScale.x > 0)
-            {
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * -1, transform.localScale.y, transform.localScale.z);
-                rotationDegree += 180f;
-            }
-            float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle + rotationDegree, Vector3.forward);
+            float distanceTravelled = Vector3.Distance(transform.position, transform.position + (Vector3)rb.velocity * Time.deltaTime);
 
-            
+            if (distanceTravelled >= decelerationDistance)
+            {
+                isDecelerating = true;
+                rb.velocity = rb.velocity.normalized * initialSpeed;
+            }
+        }
+        else if (canDecelerate && isDecelerating)
+        {
+            rb.velocity = Vector2.MoveTowards(rb.velocity, Vector2.zero, decelerationRate * Time.deltaTime);
+            if (rb.velocity.magnitude <= 0f)
+            {
+                lingerTimer += Time.deltaTime;
+                if (lingerTimer >= lingerTime)
+                {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
