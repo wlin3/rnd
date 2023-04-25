@@ -11,7 +11,7 @@ public class EnemyDamage : MonoBehaviour
     EnemyMovement enemyMovement;
     private int numberOfWins;
     private int trueDamage;
-
+    public bool isBoss = false;
     Player player;
     void Awake()
     {
@@ -22,7 +22,10 @@ public class EnemyDamage : MonoBehaviour
 
     private void Start()
     {
+        if(!isBoss)
+        {
         numberOfWins = GameManager.Instance.GetWins();
+        }       
     }
     private void Reset()
     {
@@ -35,7 +38,11 @@ public class EnemyDamage : MonoBehaviour
         {
             trueDamage = Mathf.RoundToInt(damage * (1f + (difficultyMultiplier * numberOfWins)));
             playerHealth.TakeDamage(trueDamage);
-            enemyMovement.EnemyRetreat();
+            if(!isBoss)
+            {
+                enemyMovement.EnemyRetreat();
+            }
+
         }
     }
 
