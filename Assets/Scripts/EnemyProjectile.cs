@@ -39,5 +39,10 @@ public class EnemyProjectile : MonoBehaviour
                 player.TakeDamage(damage);
             }
         }
+
+        if (collision.CompareTag("HeavyAttack"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -11,8 +11,8 @@ public class CooldownBar : MonoBehaviour
     public Gradient gradient;
     public Image fill;
     public TMP_Text cooldownText;
-    private int maxCooldown;
-    private int currentCooldown;
+    private float maxCooldown;
+    private float currentCooldown;
     
 
     public void SetMaxCooldown(float cooldown)
@@ -25,7 +25,7 @@ public class CooldownBar : MonoBehaviour
         
     }
 
-    public void SetCooldown(int cooldown)
+    public void SetCooldown(float cooldown)
     {
         slider.value = cooldown;
 
