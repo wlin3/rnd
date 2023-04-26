@@ -449,7 +449,6 @@ GameObject:
   m_Component:
   - component: {fileID: 180239606}
   - component: {fileID: 180239609}
-  - component: {fileID: 180239608}
   - component: {fileID: 180239610}
   m_Layer: 5
   m_Name: Cooldown Bar
@@ -481,50 +480,6 @@ RectTransform:
   m_AnchoredPosition: {x: -130, y: 24}
   m_SizeDelta: {x: 208, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &180239608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180239605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ae229e0e854b246a0036818a4ec5af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 180239609}
-  gradient:
-    serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 1}
-    key1: {r: 0.21226418, g: 0.5815578, b: 1, a: 1}
-    key2: {r: 0.21226418, g: 0.5815578, b: 1, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 65535
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  fill: {fileID: 1496670777}
-  healthText: {fileID: 1034767198}
 --- !u!114 &180239609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,11 +543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2b727d4dddcaa4d94dcc1139abb53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  slider: {fileID: 180239609}
   gradient:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0.21226418, g: 0.5815578, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -618,8 +573,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  fill: {fileID: 0}
-  cooldownText: {fileID: 0}
+  fill: {fileID: 1496670777}
+  cooldownText: {fileID: 1034767198}
 --- !u!1 &258935929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2406,7 @@ GameObject:
   - component: {fileID: 701265852}
   - component: {fileID: 701265853}
   - component: {fileID: 701265854}
+  - component: {fileID: 701265855}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -2657,6 +2613,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 1409601163151742868, guid: 16ce3ae45c3cf6749affa35b3ddbac5e, type: 3}
+--- !u!114 &701265855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701265843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d07835dc2e2584ea4725bfb6bdee65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &732310253
 GameObject:
   m_ObjectHideFlags: 0
