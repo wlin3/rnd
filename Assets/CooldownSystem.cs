@@ -15,6 +15,7 @@ public class CooldownSystem : MonoBehaviour
     private float chargeCooldown;
     private float chargeTimer;
     public bool chargedCanAttack;
+    private float storedChargeCooldown;
 
     public CooldownBar cooldownBar3;
     private float secondCooldown;
@@ -46,7 +47,7 @@ public class CooldownSystem : MonoBehaviour
         {
             chargeTimer += Time.deltaTime;
             cooldownBar2.SetCooldown(chargeCooldown - chargeTimer);
-            if(chargeTimer > basicCooldown)
+            if(chargeTimer > chargeCooldown)
             {
                 chargedCanAttack = true;
                 chargeTimer = 0;
@@ -78,6 +79,7 @@ public class CooldownSystem : MonoBehaviour
     {
         if(basicCanAttack)
         {
+            chargeTimer = 0;
             basicCanAttack = false;
             basicCooldown = cooldown;
             cooldownBar1.SetMaxCooldown(basicCooldown);
@@ -88,6 +90,7 @@ public class CooldownSystem : MonoBehaviour
     {
         if(chargedCanAttack)
         {
+            storedChargeCooldown = cooldown;
             chargedCanAttack = false;
             chargeCooldown = cooldown;
             cooldownBar2.SetMaxCooldown(chargeCooldown);

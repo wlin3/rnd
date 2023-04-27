@@ -23,6 +23,10 @@ public class WeaponParent : MonoBehaviour
     {
         spriteTransform = transform;
         cooldownSystem = CooldownSystem.instance;
+        if (isMelee)
+        {
+            cooldownSystem.ChargedCooldown(chargedAttackCooldown);
+        }
     }
 
     // Update is called once per frame
@@ -37,30 +41,14 @@ public class WeaponParent : MonoBehaviour
         }
         
 
-        // if (!canAttack)
-        // {
-        //     timer += Time.deltaTime;
-        //     if (timer > timeBetweenFiring)
-        //     {
-        //         canAttack = true;
-        //         timer = 0;
-        //         chargedAttack = false;
-        //     }
-        // }
-
-        if(cooldownSystem.basicCanAttack && isMelee)
-        {
-           cooldownSystem.ChargedCooldown(chargedAttackCooldown);
-        }
-
-        if (Input.GetMouseButton(0) && cooldownSystem.basicCanAttack && !GameManager.Instance.isPaused && !chargedAttack)
+        if (Input.GetMouseButton(0) && cooldownSystem.basicCanAttack && !GameManager.Instance.isPaused && !cooldownSystem.chargedCanAttack)
         {
             SlashAttack();
             cooldownSystem.BasicCooldown(timeBetweenFiring);
             cooldownSystem.ChargedCooldown(chargedAttackCooldown);
         }
 
-        if (Input.GetMouseButton(0) && cooldownSystem.chargedCanAttack && !GameManager.Instance.isPaused && chargedAttack)
+        if (Input.GetMouseButton(0) && cooldownSystem.chargedCanAttack && !GameManager.Instance.isPaused)
         {
             ChargedAttack();
             cooldownSystem.ChargedCooldown(chargedAttackCooldown);

@@ -42,7 +42,6 @@ public class RangedAttack : MonoBehaviour
         {
             facingRight = true;
         }
-        Debug.Log(facingRight);
         transform.rotation = Quaternion.Euler(0, 0, rot + rotationDegree);
 
         if (canDecelerate)

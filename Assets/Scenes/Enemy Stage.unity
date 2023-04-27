@@ -4891,7 +4891,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 6
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -7373,7 +7373,7 @@ MonoBehaviour:
   canAttack: 1
   timer: 0
   timeBetweenFiring: 0.5
-  chargedAttackCooldown: 2
+  chargedAttackCooldown: 1.75
   offSet: 0
   projectileSpawnPoint: {fileID: 732310254}
   isMelee: 1
