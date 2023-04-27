@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class WeaponParent : MonoBehaviour
@@ -16,10 +15,14 @@ public class WeaponParent : MonoBehaviour
     public Transform projectileSpawnPoint;
     public bool isMelee;
     public bool chargedAttack;
+
+    private CooldownSystem cooldownSystem;
+
     // Start is called before the first frame update
     void Start()
     {
         spriteTransform = transform;
+        cooldownSystem = CooldownSystem.instance;
     }
 
     // Update is called once per frame
@@ -34,35 +37,33 @@ public class WeaponParent : MonoBehaviour
         }
         
 
-        if (!canAttack)
+        // if (!canAttack)
+        // {
+        //     timer += Time.deltaTime;
+        //     if (timer > timeBetweenFiring)
+        //     {
+        //         canAttack = true;
+        //         timer = 0;
+        //         chargedAttack = false;
+        //     }
+        // }
+
+        if(cooldownSystem.basicCanAttack && isMelee)
         {
-            timer += Time.deltaTime;
-            if (timer > timeBetweenFiring)
-            {
-                canAttack = true;
-                timer = 0;
-                chargedAttack = false;
-            }
+           cooldownSystem.ChargedCooldown(chargedAttackCooldown);
         }
 
-        if(canAttack && isMelee)
-        {
-            timer += Time.deltaTime;
-            if(timer > chargedAttackCooldown)
-            {
-                chargedAttack = true;
-                timer = 0;
-            }
-        }
-
-        if (Input.GetMouseButton(0) && canAttack && !GameManager.Instance.isPaused && !chargedAttack)
+        if (Input.GetMouseButton(0) && cooldownSystem.basicCanAttack && !GameManager.Instance.isPaused && !chargedAttack)
         {
             SlashAttack();
+            cooldownSystem.BasicCooldown(timeBetweenFiring);
+            cooldownSystem.ChargedCooldown(chargedAttackCooldown);
         }
 
-        if (Input.GetMouseButton(0) && canAttack && !GameManager.Instance.isPaused && chargedAttack)
+        if (Input.GetMouseButton(0) && cooldownSystem.chargedCanAttack && !GameManager.Instance.isPaused && chargedAttack)
         {
             ChargedAttack();
+            cooldownSystem.ChargedCooldown(chargedAttackCooldown);
         }
     }
 

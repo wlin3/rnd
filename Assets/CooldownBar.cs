@@ -30,6 +30,16 @@ public class CooldownBar : MonoBehaviour
         slider.value = cooldown;
 
         fill.color = gradient.Evaluate(slider.normalizedValue);
-        cooldownText.text = cooldown.ToString();
+        cooldownText.text = cooldown.ToString("F2"); // Round to 2 decimal places
+
+        if (cooldown <= 0f)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
+
 }
