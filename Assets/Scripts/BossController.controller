@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e9897bb9c9e3724ca6f8c41148a4451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2.5
-  attackRange: 3
+  followDistance: 10
+  followSpeed: 2
 --- !u!1101 &-7687859541121039102
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
