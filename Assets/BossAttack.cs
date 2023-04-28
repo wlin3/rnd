@@ -4,33 +4,40 @@ using UnityEngine;
 
 public class BossAttack : StateMachineBehaviour
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 10f;
+    public float fireRate = 1f;
+    private float nextFireTime;
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    private Transform playerTransform;
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        // Get a reference to the player's transform
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        projectilePrefab = Resources.Load<GameObject>("Fireball");
+    }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        shooterAttackCooldownTimer -= Time.deltaTime;
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+        // If attack cooldown has elapsed, shoot at the player
+        if (shooterAttackCooldownTimer <= 0)
+        {
+        ShootAtTarget(target.position);
+        // Reset attack cooldown timer
+        shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+        }
+    }
+        void ShootAtTarget(Vector2 targetPosition)
+    {
+        // Create projectile and set its position and rotation
+        GameObject newProjectile = Instantiate(shooterProjectilePrefab,  animator.transform.position + directionToPlayer, Quaternion.identity);
+        newProjectile.transform.right = targetPosition - (Vector2)transform.position;
+
+        // Add force to the projectile in the direction of the player
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        newProjectile.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
+    }
 }
