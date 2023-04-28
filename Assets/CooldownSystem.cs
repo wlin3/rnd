@@ -53,14 +53,14 @@ public class CooldownSystem : MonoBehaviour
                 chargeTimer = 0;
             }
         }
-        if(secondCanAttack)
+        if(!secondCanAttack)
         {
-            basicTimer += Time.deltaTime;
-            cooldownBar1.SetCooldown(basicCooldown - basicTimer);
-            if(basicTimer > basicCooldown)
+            secondTimer += Time.deltaTime;
+            cooldownBar3.SetCooldown(secondCooldown - secondTimer);
+            if(secondTimer > secondCooldown)
             {
-                basicCanAttack = true;
-                basicTimer = 0;
+                secondCanAttack = true;
+                secondTimer = 0;
             }
         }
         if(thirdCanAttack)
@@ -99,11 +99,11 @@ public class CooldownSystem : MonoBehaviour
 
     public void Cooldown3(float cooldown)
     {
-        if(basicCanAttack)
+        if(secondCanAttack)
         {
-            basicCanAttack = false;
-            basicCooldown = cooldown;
-            cooldownBar1.SetMaxCooldown(basicCooldown);
+            secondCanAttack = false;
+            secondCooldown = cooldown;
+            cooldownBar3.SetMaxCooldown(secondCooldown);
         }
     }
 

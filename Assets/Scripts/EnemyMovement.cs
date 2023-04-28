@@ -253,27 +253,24 @@ public class EnemyMovement : MonoBehaviour
 
     void Shooter()
     {
-         float distance = Vector2.Distance(transform.position, target.position);
-         Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+        float distance = Vector2.Distance(transform.position, target.position);
+        Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
-        // If the player is within range, shoot at the player
-        if (distance <= shooterMaxDistance)
+        
+        // Update attack cooldown timer
+        shooterAttackCooldownTimer -= Time.deltaTime;
+
+        // If attack cooldown has elapsed, shoot at the player
+        if (shooterAttackCooldownTimer <= 0)
         {
-            // Update attack cooldown timer
-            shooterAttackCooldownTimer -= Time.deltaTime;
+            ShootAtTarget(target.position);
 
-            // If attack cooldown has elapsed, shoot at the player
-            if (shooterAttackCooldownTimer <= 0)
-            {
-                ShootAtTarget(target.position);
-
-                // Reset attack cooldown timer
-                shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
-            }
+            // Reset attack cooldown timer
+            shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
         }
-
+        
         // If the player is out of range, move towards the player
-        else
+        if(distance >= shooterMaxDistance)
         {
             //Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 

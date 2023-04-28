@@ -2887,7 +2887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons:
   - {fileID: 2019908485}
-  - {fileID: 783642920}
 --- !u!114 &701265854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7330,6 +7329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2019908484}
   - component: {fileID: 2019908485}
+  - component: {fileID: 2019908486}
   m_Layer: 7
   m_Name: SwordParent
   m_TagString: Untagged
@@ -7378,6 +7378,31 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 732310254}
   isMelee: 1
   chargedAttack: 0
+--- !u!114 &2019908486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019908483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625ef2c266d4940418f4bb66642b8cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tapBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
+    type: 3}
+  chargeBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
+    type: 3}
+  shotgunBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
+    type: 3}
+  shootPoint: {fileID: 732310254}
+  tapBulletCount: 1
+  chargeBulletCount: 2
+  shotgunBulletCount: 5
+  shotgunSpreadAngle: 30
+  abilityCooldown: 2
+  cooldownSystem: {fileID: 0}
 --- !u!4 &2046462760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4158928206705392575, guid: e1657b3454945c845bf51a306ea5997e,
@@ -8056,6 +8081,16 @@ PrefabInstance:
         type: 3}
       propertyPath: EnemyType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894516367495052006, guid: cf09ededf54a6a34390dd99ff4561ca9,
+        type: 3}
+      propertyPath: shooterAttackCooldownMax
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894516367495052006, guid: cf09ededf54a6a34390dd99ff4561ca9,
+        type: 3}
+      propertyPath: shooterAttackCooldownMin
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 6894516367495052007, guid: cf09ededf54a6a34390dd99ff4561ca9,
         type: 3}
