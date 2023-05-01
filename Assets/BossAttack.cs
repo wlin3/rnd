@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class BossAttack : StateMachineBehaviour
 {
-    public GameObject projectilePrefab;
     public float projectileSpeed = 10f;
     public float fireRate = 1f;
     private float nextFireTime;
-
     private Transform playerTransform;
+
+    // Define the variables here
+    private float shooterAttackCooldownTimer;
+    private float shooterAttackCooldownMin = 1f;
+    private float shooterAttackCooldownMax = 2f;
+    private GameObject shooterProjectilePrefab;
+    private Vector2 directionToPlayer;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Get a reference to the player's transform
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        projectilePrefab = Resources.Load<GameObject>("Fireball");
+        shooterProjectilePrefab = Resources.Load<GameObject>("Fireball");
+        // Initialize the variables here
+        shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
+        directionToPlayer = (playerTransform.position - animator.transform.position).normalized;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        shooterAttackCooldownTimer -= Time.deltaTime;
 
-        // If attack cooldown has elapsed, shoot at the player
-        if (shooterAttackCooldownTimer <= 0)
-        {
-        ShootAtTarget(target.position);
+        ShootAtTarget(playerTransform.position, animator);
         // Reset attack cooldown timer
-        shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
-        }
+
     }
-        void ShootAtTarget(Vector2 targetPosition)
+
+    void ShootAtTarget(Vector2 targetPosition, Animator animator)
     {
         // Create projectile and set its position and rotation
-        GameObject newProjectile = Instantiate(shooterProjectilePrefab,  animator.transform.position + directionToPlayer, Quaternion.identity);
-        newProjectile.transform.right = targetPosition - (Vector2)transform.position;
+        GameObject newProjectile = Instantiate(shooterProjectilePrefab, animator.transform.position, Quaternion.identity);
+        newProjectile.transform.right = targetPosition - (Vector2)animator.transform.position;
 
         // Add force to the projectile in the direction of the player
-        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        Vector2 direction = (targetPosition - (Vector2)animator.transform.position).normalized;
         newProjectile.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
     }
 }
