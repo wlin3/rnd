@@ -7402,7 +7402,6 @@ MonoBehaviour:
   shotgunBulletCount: 5
   shotgunSpreadAngle: 30
   abilityCooldown: 2
-  cooldownSystem: {fileID: 0}
 --- !u!4 &2046462760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4158928206705392575, guid: e1657b3454945c845bf51a306ea5997e,

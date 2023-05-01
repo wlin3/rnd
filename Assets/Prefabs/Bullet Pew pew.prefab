@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9000703698057952689}
   - component: {fileID: 1831068557836816539}
   - component: {fileID: 6805486680900970526}
-  - component: {fileID: 1865090664925179260}
+  - component: {fileID: 301784612531426972}
   m_Layer: 0
   m_Name: Bullet Pew pew
   m_TagString: Untagged
@@ -29,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 7620107674394669175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9000703698057952689
 SpriteRenderer:
@@ -103,9 +103,9 @@ MonoBehaviour:
   force: 50
   rotationDegree: 0
   canDecelerate: 0
-  distance: 0
+  distance: 100
   decelerationTime: 0
-  lingerTime: 0
+  lingerTime: 5
 --- !u!50 &6805486680900970526
 Rigidbody2D:
   serializedVersion: 4
@@ -118,7 +118,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -127,7 +127,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!60 &1865090664925179260
+--- !u!60 &301784612531426972
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

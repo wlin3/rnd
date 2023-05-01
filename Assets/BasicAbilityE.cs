@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BasicAbilityE : MonoBehaviour
 {
+    private Transform spriteTransform;
     public GameObject tapBulletPrefab;
     public GameObject chargeBulletPrefab;
     public GameObject shotgunBulletPrefab;
@@ -18,11 +19,13 @@ public class BasicAbilityE : MonoBehaviour
     private float chargeStartTime;
     private int chargeLevel = 0;
 
-    public CooldownSystem cooldownSystem;
+    private CooldownSystem cooldownSystem;
 
-    void Awake()
+    void Start()
     {
+        spriteTransform = transform;
         cooldownSystem = CooldownSystem.instance;
+
     }
     void Update()
     {
@@ -34,9 +37,10 @@ public class BasicAbilityE : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.E))
         {
-            if (isCharging)
+            if (isCharging && cooldownSystem.secondCanAttack)
             {
-                Shoot();
+                Vector3 mousePosition = GetMouseWorldPosition();
+                StartCoroutine(Shoot(mousePosition));
             }
             isCharging = false;
             chargeLevel = 0;
@@ -47,61 +51,84 @@ public class BasicAbilityE : MonoBehaviour
             if (chargeTime >= 3f)
             {
                 chargeLevel = 3;
+                Debug.Log(chargeLevel);
             }
             else if (chargeTime >= 2f)
             {
                 chargeLevel = 2;
+                Debug.Log(chargeLevel);
             }
             else if (chargeTime >= 1f)
             {
                 chargeLevel = 1;
+                Debug.Log(chargeLevel);
             }
             else
             {
                 chargeLevel = 0;
+                Debug.Log(chargeLevel);
             }
         }
     }
 
-    void Shoot()
+
+    IEnumerator Shoot(Vector3 mousePosition)
     {
         switch (chargeLevel)
         {
             case 0:
                 for (int i = 0; i < tapBulletCount; i++)
                 {
-                    Instantiate(tapBulletPrefab, GetMouseWorldPosition(), Quaternion.identity);
+                    // Calculate direction from weapon to mouse
+                    Vector3 direction = mousePosition - spriteTransform.position;
+
+                    // Calculate offset based on weapon rotation
+                    Vector3 spawnOffset = transform.right;
+
+                    Instantiate(tapBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
                 }
                 break;
             case 1:
                 for (int i = 0; i < chargeBulletCount; i++)
                 {
-                    Instantiate(chargeBulletPrefab, GetMouseWorldPosition(), Quaternion.identity);
+                    // Calculate direction from weapon to mouse
+                    Vector3 direction = mousePosition - spriteTransform.position;
+
+                    // Calculate offset based on weapon rotation
+                    Vector3 spawnOffset = transform.right;
+
+                    Instantiate(chargeBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
+
+                    yield return new WaitForSeconds(0.3f);
                 }
                 break;
+
+
             case 2:
-                Instantiate(shotgunBulletPrefab, GetMouseWorldPosition(), Quaternion.identity);
-                Vector3 mouseDirection = GetMouseWorldPosition() - shootPoint.position;
-                for (int i = 0; i < shotgunBulletCount - 1; i++)
+                for (int i = 0; i < shotgunBulletCount; i++)
                 {
-                    Quaternion spreadRotation;
-                    if (i % 2 == 0)
-                    {
-                        spreadRotation = Quaternion.Euler(Random.Range(0f, shotgunSpreadAngle),
-                        Random.Range(-shotgunSpreadAngle, 0f), 0f);
-                    }
-                    else
-                    {
-                        spreadRotation = Quaternion.Euler(Random.Range(0f, shotgunSpreadAngle),
-                        Random.Range(0f, shotgunSpreadAngle),
-                        0f);
-                    }
-                    Instantiate(shotgunBulletPrefab, GetMouseWorldPosition(), spreadRotation);
+                    // Calculate direction from weapon to mouse
+                    Vector3 direction = mousePosition - spriteTransform.position;
+
+                    // Calculate the spread angle for this bullet
+                    float spreadAngle = shotgunSpreadAngle * ((float)i / (float)(shotgunBulletCount - 1)) - (shotgunSpreadAngle / 2f);
+
+                    // Calculate the spread direction
+                    Quaternion spreadRotation = Quaternion.AngleAxis(spreadAngle, Vector3.forward);
+                    Vector3 spreadDirection = spreadRotation * direction;
+
+                    // Instantiate the bullet
+                    Instantiate(shotgunBulletPrefab, shootPoint.position + (spreadDirection.normalized * 0.5f), Quaternion.LookRotation(spreadDirection, Vector3.forward));
+
+
                 }
                 break;
         }
+
         cooldownSystem.Cooldown3(abilityCooldown);
     }
+
+
 
     Vector3 GetMouseWorldPosition()
     {

@@ -27,7 +27,7 @@ public class CooldownSystem : MonoBehaviour
     private float thirdTimer;
     public bool thirdCanAttack;
     
-    void Start()
+    void Awake()
     {
         instance = this;
     }
