@@ -11,6 +11,7 @@ public class BasicAbilityE : MonoBehaviour
     public Transform shootPoint;
     public int tapBulletCount = 1;
     public int chargeBulletCount = 2;
+    public int sniperBulletCount =1;
     public int shotgunBulletCount = 5;
     public float shotgunSpreadAngle = 30f;
     public float abilityCooldown = 2f;
@@ -29,7 +30,7 @@ public class BasicAbilityE : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && cooldownSystem.secondCanAttack)
         {
             isCharging = true;
             chargeStartTime = Time.time;
@@ -39,7 +40,7 @@ public class BasicAbilityE : MonoBehaviour
         {
             if (isCharging && cooldownSystem.secondCanAttack)
             {
-                Vector3 mousePosition = GetMouseWorldPosition();
+                Vector3 mousePosition = GetMouseWorldPosition().normalized;
                 StartCoroutine(Shoot(mousePosition));
             }
             isCharging = false;
@@ -79,8 +80,9 @@ public class BasicAbilityE : MonoBehaviour
             case 0:
                 for (int i = 0; i < tapBulletCount; i++)
                 {
-                    // Calculate direction from weapon to mouse
-                    Vector3 direction = mousePosition - spriteTransform.position;
+                    // Calculate direction from weapon to mouse and normalize it
+                    Vector3 direction = (mousePosition - spriteTransform.position).normalized;
+
 
                     // Calculate offset based on weapon rotation
                     Vector3 spawnOffset = transform.right;
@@ -91,38 +93,50 @@ public class BasicAbilityE : MonoBehaviour
             case 1:
                 for (int i = 0; i < chargeBulletCount; i++)
                 {
-                    // Calculate direction from weapon to mouse
-                    Vector3 direction = mousePosition - spriteTransform.position;
+                    // Calculate direction from weapon to mouse and normalize it
+                    Vector3 direction = (mousePosition - spriteTransform.position).normalized;
+
 
                     // Calculate offset based on weapon rotation
                     Vector3 spawnOffset = transform.right;
 
-                    Instantiate(chargeBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
+                    Instantiate(tapBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
 
                     yield return new WaitForSeconds(0.3f);
                 }
                 break;
 
-
             case 2:
-                for (int i = 0; i < shotgunBulletCount; i++)
+                for (int i = 0; i < sniperBulletCount; i++)
                 {
-                    // Calculate direction from weapon to mouse
-                    Vector3 direction = mousePosition - spriteTransform.position;
-
-                    // Calculate the spread angle for this bullet
-                    float spreadAngle = shotgunSpreadAngle * ((float)i / (float)(shotgunBulletCount - 1)) - (shotgunSpreadAngle / 2f);
-
-                    // Calculate the spread direction
-                    Quaternion spreadRotation = Quaternion.AngleAxis(spreadAngle, Vector3.forward);
-                    Vector3 spreadDirection = spreadRotation * direction;
-
-                    // Instantiate the bullet
-                    Instantiate(shotgunBulletPrefab, shootPoint.position + (spreadDirection.normalized * 0.5f), Quaternion.LookRotation(spreadDirection, Vector3.forward));
+                    // Calculate direction from weapon to mouse and normalize it
+                    Vector3 direction = (mousePosition - spriteTransform.position).normalized;
 
 
+                    // Calculate offset based on weapon rotation
+                    Vector3 spawnOffset = transform.right;
+
+                    Instantiate(chargeBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
                 }
                 break;
+
+            case 3:
+                 for (int i = 0; i < shotgunBulletCount; i++)
+                {
+                    // Calculate direction from weapon to mouse and normalize it
+                    Vector3 direction = (mousePosition - spriteTransform.position).normalized;
+
+
+                    // Calculate offset based on weapon rotation
+                    Vector3 spawnOffset = transform.right;
+
+                    Instantiate(shotgunBulletPrefab, shootPoint.position + spawnOffset, Quaternion.identity);
+                }
+
+                break;
+
+
+
         }
 
         cooldownSystem.Cooldown3(abilityCooldown);

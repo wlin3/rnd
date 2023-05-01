@@ -3168,7 +3168,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 6
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -3682,7 +3682,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 6
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -7390,16 +7390,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625ef2c266d4940418f4bb66642b8cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
+  tapBulletPrefab: {fileID: 8159492056067436567, guid: 3aabc653aed2ccf4d90c295f1b06f3db,
     type: 3}
-  chargeBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
+  chargeBulletPrefab: {fileID: 4694442747368763180, guid: 2f9d80798ee51194387881cbdd8aa4cc,
     type: 3}
   shotgunBulletPrefab: {fileID: 7620107674394669175, guid: 81322590809265e43af6df253c8a4d87,
     type: 3}
   shootPoint: {fileID: 732310254}
   tapBulletCount: 1
   chargeBulletCount: 2
-  shotgunBulletCount: 5
+  sniperBulletCount: 1
+  shotgunBulletCount: 8
   shotgunSpreadAngle: 30
   abilityCooldown: 2
 --- !u!4 &2046462760 stripped
