@@ -18,11 +18,11 @@ public class SlashAttackVersion2 : MonoBehaviour
         projectileLocation = GameObject.Find("Projectile Location").transform;
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+        Vector2 direction = new Vector2(mousePosition.x - playerTransform.position.x, mousePosition.y - playerTransform.position.y);
 
-        Vector3 rotation = transform.position - mousePosition;
+        // Vector3 rotation = transform.position - mousePosition;
 
-        float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+        // float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         if (direction.x < 0 && facingRight)
         {
             facingRight = false;
@@ -30,13 +30,13 @@ public class SlashAttackVersion2 : MonoBehaviour
             transform.Rotate(0, 0, 180);
             direction = new Vector2(-direction.x, -direction.y);
         }
-        else if (direction.x > 0 && !facingRight)
-        {
+         else if (direction.x > 0 && !facingRight)
+         {
             facingRight = true;
             transform.Rotate(0, 0, 180);
             transform.localScale = new Vector3(1, 1, 1);
-        }
-        transform.rotation = Quaternion.Euler(0, 0, rot + 180);
+         }
+         //transform.rotation = Quaternion.Euler(0, 0, rot + 180);
 
         Destroy(gameObject, lifetime);
     }

@@ -30,13 +30,13 @@ public class BasicAbilityE : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && cooldownSystem.secondCanAttack)
+        if (Input.GetMouseButtonDown(1) && cooldownSystem.secondCanAttack)
         {
             isCharging = true;
             chargeStartTime = Time.time;
             chargeLevel = 0;
         }
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetMouseButtonUp(1))
         {
             if (isCharging && cooldownSystem.secondCanAttack)
             {

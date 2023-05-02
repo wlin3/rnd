@@ -23,11 +23,14 @@ public class RangedAttack : MonoBehaviour
     private bool isDecelerating;
     private float lingerTimer;
 
+    private Transform playerTransform;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y);
+        Vector2 direction = new Vector2(mousePosition.x - playerTransform.position.x, mousePosition.y - playerTransform.position.y);
         rb = GetComponent<Rigidbody2D>();
 
         Vector3 rotation = transform.position - mousePosition;

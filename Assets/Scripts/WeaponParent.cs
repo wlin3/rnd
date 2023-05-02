@@ -67,7 +67,9 @@ public class WeaponParent : MonoBehaviour
         Vector3 spawnOffset = transform.right * offSet;
         
         canAttack = false;
-        Instantiate(projectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+        GameObject newSlash = Instantiate(projectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+
+        newSlash.transform.rotation = transform.rotation;
     }
 
     void ChargedAttack()
@@ -82,6 +84,10 @@ public class WeaponParent : MonoBehaviour
         Vector3 spawnOffset = transform.right * offSet;
         
         canAttack = false;
-        Instantiate(chargedProjectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+        // Instantiate the charged projectile
+        GameObject newChargedProjectile = Instantiate(chargedProjectile, projectileSpawnPoint.position + spawnOffset, Quaternion.identity);
+
+        // Set the rotation of the charged projectile to match the WeaponParent
+        newChargedProjectile.transform.rotation = transform.rotation;
     }
 }

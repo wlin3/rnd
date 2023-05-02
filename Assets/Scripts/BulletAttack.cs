@@ -15,11 +15,15 @@ public class BulletAttack : MonoBehaviour
 
     private List<Collider2D> hitEnemies = new List<Collider2D>();
 
+    
+    private Transform playerTransform;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = new Vector2(mousePosition.x - transform.position.x, mousePosition.y - transform.position.y).normalized;
+        Vector2 direction = new Vector2(mousePosition.x - playerTransform.position.x, mousePosition.y - playerTransform.position.y);
         rb = GetComponent<Rigidbody2D>();
 
         // Apply random spread to the direction
