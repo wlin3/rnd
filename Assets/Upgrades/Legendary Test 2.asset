@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a84ca2eb77ffe4dabd66a4e519393b, type: 3}
   m_Name: Legendary Test 2
   m_EditorClassIdentifier: 
-  upgradeName: Legendary Test 2
-  description: Legendary Test 2
+  upgradeName: Funny Air Shooty
+  description: Shoot air
   artwork: {fileID: 21300000, guid: 7f6f72530a998a742a05d96c4dd5d60c, type: 3}
   cost: 4
-  upgradeID: 2147483647
+  upgradeID: 1000
