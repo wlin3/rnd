@@ -15,6 +15,19 @@ public class UpgradeManager : MonoBehaviour
 
     private void Awake()
     {
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+        abilityScript = GameObject.Find("SwordParent").GetComponent<BasicAbilityE>();
+
+        // Check if the health bar exists in the scene
+        GameObject healthBarObj = GameObject.Find("Main Gui");
+        if (healthBarObj != null)
+        {
+            healthBar = healthBarObj.GetComponentInChildren<HealthBar>();
+        }
+        else
+        {
+        return;
+        }
         LoadAppliedUpgrades(); // load applied upgrades from file during game start-up
     }
 
@@ -58,6 +71,11 @@ public class UpgradeManager : MonoBehaviour
             default:
                 Debug.LogError("Invalid upgrade ID");
                 break;
+        }
+        if (appliedUpgrades.Contains(upgradeId))
+        {
+        Debug.Log("Upgrade " + upgradeId + " has already been applied.");
+        return;
         }
         appliedUpgrades.Add(upgradeId);
         SaveAppliedUpgrades();

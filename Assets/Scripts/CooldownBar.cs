@@ -14,7 +14,13 @@ public class CooldownBar : MonoBehaviour
     private float maxCooldown;
     private float currentCooldown;
     
-
+    private void Awake()
+    {
+        if(maxCooldown <= 0f)
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public void SetMaxCooldown(float cooldown)
     {
         slider.maxValue = cooldown;
