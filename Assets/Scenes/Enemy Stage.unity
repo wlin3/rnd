@@ -5506,7 +5506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteSprite: {fileID: 1366920512}
   chargeLevel: 0
-  previousChargeLevel: 0
+  lastChargeLevel: 0
 --- !u!1 &1377581524
 GameObject:
   m_ObjectHideFlags: 0
@@ -5808,7 +5808,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1464272929
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,7 +36,12 @@ public class BasicAbilityE : MonoBehaviour
             isCharging = true;
             chargeStartTime = Time.time;
             chargeLevel = 0;
-            chargeEffect.chargeLevel = chargeLevel;
+            if(chargeEffect.lastChargeLevel != chargeLevel)
+                {
+                    chargeEffect.gameObject.SetActive(true);
+                    chargeEffect.chargeLevel = chargeLevel;
+                    chargeEffect.PlayAnimation();
+                }
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -47,7 +52,6 @@ public class BasicAbilityE : MonoBehaviour
             }
             isCharging = false;
             chargeLevel = 0;
-            chargeEffect.chargeLevel = chargeLevel;
         }
         if (isCharging)
         {
@@ -55,25 +59,40 @@ public class BasicAbilityE : MonoBehaviour
             if (chargeTime >= 3f)
             {
                 chargeLevel = 3;
-                chargeEffect.chargeLevel = chargeLevel;
+                if(chargeEffect.lastChargeLevel != chargeLevel)
+                {
+                    chargeEffect.gameObject.SetActive(true);
+                    chargeEffect.chargeLevel = chargeLevel;
+                    chargeEffect.PlayAnimation();
+                }
+                
                 Debug.Log(chargeLevel);
             }
             else if (chargeTime >= 2f)
             {
                 chargeLevel = 2;
-                chargeEffect.chargeLevel = chargeLevel;
+                if(chargeEffect.lastChargeLevel != chargeLevel)
+                {
+                    chargeEffect.gameObject.SetActive(true);
+                    chargeEffect.chargeLevel = chargeLevel;
+                    chargeEffect.PlayAnimation();
+                }
                 Debug.Log(chargeLevel);
             }
             else if (chargeTime >= 1f)
             {
                 chargeLevel = 1;
-                chargeEffect.chargeLevel = chargeLevel;
+               if(chargeEffect.lastChargeLevel != chargeLevel)
+                {
+                    chargeEffect.gameObject.SetActive(true);
+                    chargeEffect.chargeLevel = chargeLevel;
+                    chargeEffect.PlayAnimation();
+                }
                 Debug.Log(chargeLevel);
             }
             else
             {
                 chargeLevel = 0;
-                chargeEffect.chargeLevel = chargeLevel;
                 Debug.Log(chargeLevel);
             }
         }
