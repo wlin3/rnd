@@ -5,27 +5,26 @@ using UnityEngine;
 public class ChargeEffect : MonoBehaviour
 {
     public GameObject whiteSprite;
-    [HideInInspector] public int chargeLevel = 0;
-    [HideInInspector] public int previousChargeLevel = 0;
+    private Coroutine currentAnimation;
 
-    void Awake()
+    [HideInInspector]public int chargeLevel = 58;
+    [HideInInspector] public int lastChargeLevel = 58;
+
+    void Start()
     {
+        gameObject.SetActive(false);
+    }
+
+    public void PlayAnimation()
+    {
+        if(chargeLevel != lastChargeLevel)
+        {
+            // Start the new animation
+            currentAnimation = StartCoroutine(ExpandWhiteSprite());
+            lastChargeLevel = chargeLevel;
+        }
         
     }
-    void Update()
-    {
-        
-        if (chargeLevel > previousChargeLevel)
-        {
-            StartCoroutine(ExpandWhiteSprite());
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
-        previousChargeLevel = chargeLevel;
-    }   
-
 
     IEnumerator ExpandWhiteSprite()
     {
@@ -38,7 +37,7 @@ public class ChargeEffect : MonoBehaviour
         while (Time.time - startTime < duration)
         {
             float t = (Time.time - startTime) / duration;
-            float scale = Mathf.Lerp(1.3f, 1f, t);
+            float scale = Mathf.Lerp(0.9f, 1f, t);
             Color color = new Color(1, 1, 1, Mathf.Lerp(0, 1, t));
 
             whiteSprite.transform.localScale = originalScale * scale;
@@ -49,7 +48,7 @@ public class ChargeEffect : MonoBehaviour
 
         whiteSprite.transform.localScale = originalScale;
         whiteSprite.GetComponent<SpriteRenderer>().color = originalColor;
-
+        currentAnimation = null;
+        gameObject.SetActive(false);
     }
 }
-
