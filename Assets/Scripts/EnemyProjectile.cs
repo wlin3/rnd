@@ -7,7 +7,7 @@ public class EnemyProjectile : MonoBehaviour
     public int damage = 10;
     private Rigidbody2D rb;
     public float force;
-    public float lifetime = 2f; // set the lifetime of the projectile
+    public float lifetime = 20f; // set the lifetime of the projectile
     private List<Collider2D> hitEnemies = new List<Collider2D>();
 
     // Start is called before the first frame update
