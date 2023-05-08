@@ -256,32 +256,31 @@ public class EnemyMovement : MonoBehaviour
         float distance = Vector2.Distance(transform.position, target.position);
         Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
-        
         // Update attack cooldown timer
         shooterAttackCooldownTimer -= Time.deltaTime;
 
         // If attack cooldown has elapsed, shoot at the player
-        if (shooterAttackCooldownTimer <= 0)
+        if (shooterAttackCooldownTimer <= 0 && distance <= shooterMaxDistance)
         {
             ShootAtTarget(target.position);
 
             // Reset attack cooldown timer
             shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
         }
-        
-        // If the player is out of range, move towards the player
-        if(distance >= shooterMaxDistance)
-        {
-            //Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
+        // If the player is within range, stop moving horizontally
+        if (distance >= shooterMaxDistance)
+        {
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(shooterAcceleration * distance / shooterMaxDistance, shooterSpeed, shooterAcceleration);
 
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
-            rb.velocity = newVelocity;
+            rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
         }
         
+
+        // Flip the enemy sprite if necessary
         if (direction.x < 0 && facingRight) 
         {
             facingRight = false;
@@ -296,6 +295,9 @@ public class EnemyMovement : MonoBehaviour
             spriteTransform.localScale = new Vector3(1, 1, 1);
         }
     }
+
+
+
 
     void ShootAtTarget(Vector2 targetPosition)
     {
