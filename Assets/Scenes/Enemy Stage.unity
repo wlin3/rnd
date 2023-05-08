@@ -7749,7 +7749,8 @@ MonoBehaviour:
   sniperBulletCount: 1
   shotgunBulletCount: 6
   shotgunSpreadAngle: 15
-  abilityCooldown: 2
+  abilityCooldown: 4
+  chargeCooldown: 0.75
   chargeEffect: {fileID: 1366920515}
 --- !u!4 &2046462760 stripped
 Transform:

@@ -15,7 +15,8 @@ public class BasicAbilityE : MonoBehaviour
     public int shotgunBulletCount = 5;
     public float shotgunSpreadAngle = 30f;
     public float abilityCooldown = 2f;
-
+    public float chargeCooldown = 1f;
+    private float savedCooldown;
     private bool isCharging = false;
     private float chargeStartTime;
     private int chargeLevel = 0;
@@ -27,12 +28,14 @@ public class BasicAbilityE : MonoBehaviour
     {
         spriteTransform = transform;
         cooldownSystem = CooldownSystem.instance;
+        savedCooldown = abilityCooldown;
 
     }
     void Update()
     {
         if (Input.GetMouseButtonDown(1) && cooldownSystem.secondCanAttack)
-        {
+        {   
+            abilityCooldown = savedCooldown;
             isCharging = true;
             chargeStartTime = Time.time;
             chargeLevel = 0;
@@ -47,8 +50,14 @@ public class BasicAbilityE : MonoBehaviour
         {
             if (isCharging && cooldownSystem.secondCanAttack)
             {
+                if(chargeLevel == 0f)
+                {
+                    abilityCooldown *= 0.5f;
+                }
                 Vector3 mousePosition = GetMouseWorldPosition().normalized;
                 StartCoroutine(Shoot(mousePosition));
+
+                
             }
             isCharging = false;
             chargeLevel = 0;
@@ -56,7 +65,7 @@ public class BasicAbilityE : MonoBehaviour
         if (isCharging)
         {
             float chargeTime = Time.time - chargeStartTime;
-            if (chargeTime >= 3f)
+            if (chargeTime >= 3 * chargeCooldown)
             {
                 chargeLevel = 3;
                 if(chargeEffect.lastChargeLevel != chargeLevel)
@@ -68,7 +77,7 @@ public class BasicAbilityE : MonoBehaviour
                 
                 Debug.Log(chargeLevel);
             }
-            else if (chargeTime >= 2f)
+            else if (chargeTime >= 2 * chargeCooldown)
             {
                 chargeLevel = 2;
                 if(chargeEffect.lastChargeLevel != chargeLevel)
@@ -79,7 +88,7 @@ public class BasicAbilityE : MonoBehaviour
                 }
                 Debug.Log(chargeLevel);
             }
-            else if (chargeTime >= 1f)
+            else if (chargeTime >= chargeCooldown)
             {
                 chargeLevel = 1;
                if(chargeEffect.lastChargeLevel != chargeLevel)
