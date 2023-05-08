@@ -477,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 21.700012, y: 64.8}
+  m_AnchoredPosition: {x: 21.700073, y: 64.79999}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180239609
@@ -2697,6 +2697,7 @@ GameObject:
   - component: {fileID: 701265853}
   - component: {fileID: 701265854}
   - component: {fileID: 701265855}
+  - component: {fileID: 701265856}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -2923,6 +2924,19 @@ MonoBehaviour:
   secondCanAttack: 0
   cooldownBar4: {fileID: 281728694}
   thirdCanAttack: 0
+--- !u!114 &701265856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701265843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27643a3115991654baaa699b5ef5e53a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: -15
 --- !u!1 &732310253
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,8 +7747,8 @@ MonoBehaviour:
   tapBulletCount: 1
   chargeBulletCount: 2
   sniperBulletCount: 1
-  shotgunBulletCount: 8
-  shotgunSpreadAngle: 30
+  shotgunBulletCount: 6
+  shotgunSpreadAngle: 15
   abilityCooldown: 2
   chargeEffect: {fileID: 1366920515}
 --- !u!4 &2046462760 stripped
