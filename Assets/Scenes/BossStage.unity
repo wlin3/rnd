@@ -879,7 +879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &617789518
 Transform:
   m_ObjectHideFlags: 0
@@ -1405,8 +1405,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  fill: {fileID: 525786521}
-  healthText: {fileID: 347625371}
+  fill: {fileID: 665821817}
+  healthText: {fileID: 2059847855}
 --- !u!1 &1233494402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,8 +1541,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 617789519}
+  - {fileID: 2089276097}
 --- !u!114 &1236359265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1946,9 +1946,9 @@ GameObject:
   - component: {fileID: 1790236217}
   - component: {fileID: 1790236218}
   - component: {fileID: 1790236219}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlyingFish
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2107,7 +2107,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790236211}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 834e391c70eaa4d4c9c7b236779a0046, type: 3}
   m_Name: 
@@ -2461,7 +2461,7 @@ GameObject:
   - component: {fileID: 1989303104}
   m_Layer: 0
   m_Name: Hitbox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2641,7 +2641,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -111.31442, y: -96.32977}
+  m_AnchoredPosition: {x: -0.000022888184, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2059847855

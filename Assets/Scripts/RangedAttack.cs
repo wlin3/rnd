@@ -10,7 +10,7 @@ public class RangedAttack : MonoBehaviour
     private bool facingRight = true;
     public float lifetime = 2f; // set the lifetime of the projectile
     private List<Collider2D> hitEnemies = new List<Collider2D>();
-
+    public BossHealth BossHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +61,13 @@ public class RangedAttack : MonoBehaviour
             {
                 enemy.TakeDamageEnemy(damage);
             }
+        }
+        else if (collision.CompareTag("Boss") && !hitEnemies.Contains(collision))
+        {
+            hitEnemies.Add(collision);
+
+            BossHealth enemy = collision.GetComponent<BossHealth>();
+            BossHealth.TakeDamage(1);
         }
     }
 }

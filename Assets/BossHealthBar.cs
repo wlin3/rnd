@@ -14,7 +14,7 @@ public class BossHealthBar : MonoBehaviour
     private int maxHealth;
     
 
-    public void SetMaxHealth(int health)
+    public void BossSetMaxHealth(int health)
     {
         slider.maxValue = health;
         slider.value = health;
@@ -24,7 +24,7 @@ public class BossHealthBar : MonoBehaviour
         
     }
 
-    public void SetHealth(int health)
+    public void BossSetHealth(int health)
     {
         slider.value = health;
 
