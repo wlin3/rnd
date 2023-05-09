@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2207c911615ff34b8a2918243580ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6894516367495052027, guid: cf09ededf54a6a34390dd99ff4561ca9,
+  enemyPrefab: {fileID: 1791915854517015746, guid: 0b02677ee7be38f42b647a32ad14b3b8,
     type: 3}
   minEnemies: 5
   maxEnemies: 10
