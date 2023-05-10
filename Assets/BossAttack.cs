@@ -4,44 +4,42 @@ using UnityEngine;
 
 public class BossAttack : StateMachineBehaviour
 {
-    public float projectileSpeed = 10f;
-    public float fireRate = 1f;
-    private float nextFireTime;
-    private Transform playerTransform;
+    public float fireballDuration = 3f;
+    public float fireballSpeed = 5f;
+    public float fireballCooldown = 2f;
+    public GameObject Fireball;
 
-    // Define the variables here
-    private float shooterAttackCooldownTimer;
-    private float shooterAttackCooldownMin = 1f;
-    private float shooterAttackCooldownMax = 2f;
-    private GameObject shooterProjectilePrefab;
-    private Vector2 directionToPlayer;
+    private GameObject player;
+    private float timeSinceLastFireball = 0f;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Get a reference to the player's transform
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        shooterProjectilePrefab = Resources.Load<GameObject>("Fireball");
-        // Initialize the variables here
-        shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
-        directionToPlayer = (playerTransform.position - animator.transform.position).normalized;
+        player = GameObject.FindWithTag("Player");
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        ShootAtTarget(playerTransform.position, animator);
-        // Reset attack cooldown timer
-
+        if (timeSinceLastFireball >= fireballCooldown)
+        {
+            GameObject fireballPrefab = Instantiate(Fireball, player.transform.position + Vector3.up * 20f, Quaternion.identity);
+            Rigidbody2D rb = fireballPrefab.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.down * fireballSpeed;
+            Destroy(fireballPrefab, fireballDuration);
+            timeSinceLastFireball = 0f;
+        }
+        else
+        {
+            timeSinceLastFireball += Time.deltaTime;
+        }
     }
 
-    void ShootAtTarget(Vector2 targetPosition, Animator animator)
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Create projectile and set its position and rotation
-        GameObject newProjectile = Instantiate(shooterProjectilePrefab, animator.transform.position, Quaternion.identity);
-        newProjectile.transform.right = targetPosition - (Vector2)animator.transform.position;
-
-        // Add force to the projectile in the direction of the player
-        Vector2 direction = (targetPosition - (Vector2)animator.transform.position).normalized;
-        newProjectile.GetComponent<Rigidbody2D>().AddForce(direction * 10f, ForceMode2D.Impulse);
+        // Clear any fireballs still active when exiting the state
+        GameObject[] fireballs = GameObject.FindGameObjectsWithTag("Fireball");
+        foreach (GameObject fireball in fireballs)
+        {
+            Destroy(fireball);
+        }
     }
 }
