@@ -102,5 +102,16 @@ public class RangedAttack : MonoBehaviour
                 enemy.TakeDamageEnemy(damage);
             }
         }
+        else if (collision.CompareTag("Boss") && !hitEnemies.Contains(collision))
+        {
+            hitEnemies.Add(collision);
+
+            BossHealth enemy = collision.GetComponent<BossHealth>();
+            if (enemy != null && !enemy.BossisImmune)
+            {
+                enemy.BossTakeDamage(damage);
+            }
+
+        }
     }
 }
