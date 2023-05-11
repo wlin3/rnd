@@ -68,16 +68,32 @@ public class SlashAttackVersion2 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision))
-        {
-            hitEnemies.Add(collision);
-
-            EnemyHealth enemy = collision.GetComponent<EnemyHealth>();
-            if (enemy != null && !enemy.isImmune)
+            if (collision.CompareTag("Enemy") && !hitEnemies.Contains(collision))
             {
-                enemy.TakeDamageEnemy(damage);
+                hitEnemies.Add(collision);
+
+                EnemyHealth enemy = collision.GetComponent<EnemyHealth>();
+                if (enemy != null && !enemy.isImmune)
+                {
+                    enemy.TakeDamageEnemy(damage);
+                }
             }
-        }
+            else if (collision.CompareTag("Boss") && !hitEnemies.Contains(collision))
+            {
+                // Check if the collision object has the "Boss" tag before executing the code
+                if (!collision.CompareTag("Boss"))
+                {
+                    return;
+                }
+
+                hitEnemies.Add(collision);
+
+                BossHealth enemy = collision.GetComponent<BossHealth>();
+                if (enemy != null && !enemy.BossisImmune)
+                {
+                    enemy.BossTakeDamage(damage);
+                }
+            }
     }
 
 }

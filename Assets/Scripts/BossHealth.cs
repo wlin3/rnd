@@ -26,9 +26,9 @@ public class BossHealth : MonoBehaviour
         }
     }
 
-    public void BossTakeDamage(int damage)
+    public void BossTakeDamage(float damage)
     {
-        currentHealth -= damage;
+        currentHealth -= (int)damage;
         healthBar.BossSetHealth(currentHealth);
         if(currentHealth <= 0)
         {

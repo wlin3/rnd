@@ -104,6 +104,12 @@ public class RangedAttack : MonoBehaviour
         }
         else if (collision.CompareTag("Boss") && !hitEnemies.Contains(collision))
         {
+            // Check if the collision object has the "Boss" tag before executing the code
+            if (!collision.CompareTag("Boss"))
+            {
+                return;
+            }
+
             hitEnemies.Add(collision);
 
             BossHealth enemy = collision.GetComponent<BossHealth>();
@@ -111,7 +117,7 @@ public class RangedAttack : MonoBehaviour
             {
                 enemy.BossTakeDamage(damage);
             }
-
         }
     }
+
 }
