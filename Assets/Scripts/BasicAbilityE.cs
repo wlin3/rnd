@@ -39,12 +39,11 @@ public class BasicAbilityE : MonoBehaviour
             isCharging = true;
             chargeStartTime = Time.time;
             chargeLevel = 0;
-            if(chargeEffect.lastChargeLevel != chargeLevel)
-                {
-                    chargeEffect.gameObject.SetActive(true);
-                    chargeEffect.chargeLevel = chargeLevel;
-                    chargeEffect.PlayAnimation();
-                }
+            
+            chargeEffect.gameObject.SetActive(true);
+            chargeEffect.chargeLevel = -10;
+            chargeEffect.PlayAnimation();
+            chargeEffect.lastChargeLevel = -9;
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -73,9 +72,9 @@ public class BasicAbilityE : MonoBehaviour
                     chargeEffect.gameObject.SetActive(true);
                     chargeEffect.chargeLevel = chargeLevel;
                     chargeEffect.PlayAnimation();
+                    Debug.Log(chargeLevel);
                 }
                 
-                Debug.Log(chargeLevel);
             }
             else if (chargeTime >= 2 * chargeCooldown)
             {
@@ -85,24 +84,26 @@ public class BasicAbilityE : MonoBehaviour
                     chargeEffect.gameObject.SetActive(true);
                     chargeEffect.chargeLevel = chargeLevel;
                     chargeEffect.PlayAnimation();
+                    Debug.Log(chargeLevel);
                 }
-                Debug.Log(chargeLevel);
+                
             }
             else if (chargeTime >= chargeCooldown)
             {
                 chargeLevel = 1;
                if(chargeEffect.lastChargeLevel != chargeLevel)
-                {
+               {
                     chargeEffect.gameObject.SetActive(true);
                     chargeEffect.chargeLevel = chargeLevel;
                     chargeEffect.PlayAnimation();
-                }
-                Debug.Log(chargeLevel);
+                    Debug.Log(chargeLevel);
+               }
+                
             }
             else
             {
                 chargeLevel = 0;
-                Debug.Log(chargeLevel);
+
             }
         }
     }

@@ -16,7 +16,8 @@ public class UpgradeManager : MonoBehaviour
     private void Awake()
     {
         playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        abilityScript = GameObject.Find("SwordParent").GetComponent<BasicAbilityE>();
+        abilityScript = GameObject.Find("Player/SwordParent").GetComponent<BasicAbilityE>();
+
 
         // Check if the health bar exists in the scene
         GameObject healthBarObj = GameObject.Find("Main Gui");
@@ -32,21 +33,22 @@ public class UpgradeManager : MonoBehaviour
     }
 
     public void Update()
-{
-    playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-    abilityScript = GameObject.Find("SwordParent").GetComponent<BasicAbilityE>();
+    {
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+       abilityScript = GameObject.Find("Player/SwordParent").GetComponent<BasicAbilityE>();
 
-    // Check if the health bar exists in the scene
-    GameObject healthBarObj = GameObject.Find("Main Gui");
-    if (healthBarObj != null)
-    {
-        healthBar = healthBarObj.GetComponentInChildren<HealthBar>();
+
+        // Check if the health bar exists in the scene
+        GameObject healthBarObj = GameObject.Find("Main Gui");
+        if (healthBarObj != null)
+        {
+            healthBar = healthBarObj.GetComponentInChildren<HealthBar>();
+        }
+        else
+        {
+           return;
+        }
     }
-    else
-    {
-       return;
-    }
-}
 
     public void ApplyUpgrade(int upgradeId)
     {
