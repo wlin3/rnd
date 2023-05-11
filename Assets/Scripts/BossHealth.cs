@@ -6,6 +6,7 @@ public class BossHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public bool BossisImmune = false;
 
     public BossHealthBar healthBar;
 
@@ -17,14 +18,15 @@ public class BossHealth : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Arrow")
+        if (collision.gameObject.tag == "arrow")
         {
-            TakeDamage(10);
+            Debug.Log("Arrow hit boss");
+            BossTakeDamage(10);
             Destroy(collision.gameObject);
         }
     }
 
-    public void TakeDamage(int damage)
+    public void BossTakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.BossSetHealth(currentHealth);

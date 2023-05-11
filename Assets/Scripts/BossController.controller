@@ -126,10 +126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c1b3ee6ba8d734eb998a2cc7b09649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1094930031011144840, guid: 991646cf0a531974d89f1348c5536e66,
+  fireballDuration: 3
+  fireballSpeed: 5
+  fireballCooldown: 2
+  Fireball: {fileID: 2884531554143845966, guid: d812a2e45cd86d946b64249af855267f,
     type: 3}
-  projectileSpeed: 10
-  fireRate: 1
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0

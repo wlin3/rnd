@@ -12,7 +12,7 @@ public class BossHealthBar : MonoBehaviour
     public Image fill;
     public TMP_Text healthText;
     private int maxHealth;
-    
+    public bool BossisImmune = false;    
 
     public void BossSetMaxHealth(int health)
     {
