@@ -6,6 +6,7 @@ public class CooldownSystem : MonoBehaviour
 {
     public static CooldownSystem instance;
 
+    public bool autoFire;
     public CooldownBar cooldownBar1;
     private float basicCooldown;
     private float basicTimer;
@@ -79,7 +80,10 @@ public class CooldownSystem : MonoBehaviour
     {
         if(basicCanAttack)
         {
-            chargeTimer = 0;
+            if(!autoFire)
+            {
+                chargeTimer = chargeCooldown;
+            }
             basicCanAttack = false;
             basicCooldown = cooldown;
             cooldownBar1.SetMaxCooldown(basicCooldown);

@@ -15,7 +15,7 @@ public class WeaponParent : MonoBehaviour
     public Transform projectileSpawnPoint;
     public bool isMelee;
     public bool chargedAttack;
-
+    public bool autoFire;
     private CooldownSystem cooldownSystem;
 
     // Start is called before the first frame update
@@ -45,7 +45,11 @@ public class WeaponParent : MonoBehaviour
         {
             SlashAttack();
             cooldownSystem.BasicCooldown(timeBetweenFiring);
-            cooldownSystem.ChargedCooldown(chargedAttackCooldown);
+            if(!autoFire)
+            {
+                cooldownSystem.ChargedCooldown(chargedAttackCooldown);
+            }
+
         }
 
         if (Input.GetMouseButton(0) && cooldownSystem.chargedCanAttack && !GameManager.Instance.isPaused)
