@@ -37,6 +37,9 @@ public class BossHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
             healthBar.BossSetHealth(currentHealth);
+            Destroy(healthBar);
+            Destroy(gameObject);
+            GameManager.Instance.WinEnemyStage();
         }
     }
 }

@@ -34,9 +34,17 @@ public class UpgradeManager : MonoBehaviour
 
     public void Update()
     {
-        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-       abilityScript = GameObject.Find("Player/SwordParent").GetComponent<BasicAbilityE>();
+        GameObject playerObject = GameObject.Find("Player");
+        if (playerObject != null)
+        {
+            playerHealth = playerObject.GetComponent<PlayerHealth>();
+        }
 
+        GameObject abilityObject = GameObject.Find("Player/SwordParent");
+        if (abilityObject != null)
+        {
+            abilityScript = abilityObject.GetComponent<BasicAbilityE>();
+        }
 
         // Check if the health bar exists in the scene
         GameObject healthBarObj = GameObject.Find("Main Gui");

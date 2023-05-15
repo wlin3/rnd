@@ -19,6 +19,7 @@ public class GameData
 
 public class GameManager : MonoBehaviour
 {
+    public bool demoMode;
     // Singleton instance
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -126,6 +127,16 @@ public class GameManager : MonoBehaviour
 
             // Show the upgrade menu
             UpgradeMenu.instance.ShowUpgradeMenu();
+        }
+        if (demoMode)
+        {
+            stagesWon = 0;
+            // Hide the main GUI
+            MainGui.instance.HideGUi();
+            //Show Demo Gui
+            DemoGUI.instance.ShowGui();
+            SystemPause(true);
+
         }
         else
         {
