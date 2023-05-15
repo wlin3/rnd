@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.UIElements;
 
 [Serializable] // Mark the class as serializable
 public class GameData
@@ -28,15 +29,19 @@ public class GameManager : MonoBehaviour
 
     public int stagesWon;
 
+    private int upgradeID;
+
     public int upgradePoints;
 
-    public GameObject upgradeMenu;
+    public bool isPaused = false;
+    public bool systemPause = false;
 
     // Name of the GameManager GameObject
     private string mainGameManagerObjectName = "[Main] Game Manager"; // New name for the main GameManager object
 
     private void Awake()
     {
+        isPaused = false;
         // Check if another GameManager instance exists
         GameObject[] gameManagers = GameObject.FindGameObjectsWithTag("GameManager");
         if (gameManagers.Length > 1)
@@ -116,14 +121,15 @@ public class GameManager : MonoBehaviour
         stagesWon += 1;
         if (canTeleport)
         {
-            Debug.Log("You beat stage");
-            SceneManager.LoadScene("Main Scene");
-        }
+            // Hide the main GUI
+            MainGui.instance.HideGUi();
 
+            // Show the upgrade menu
+            UpgradeMenu.instance.ShowUpgradeMenu();
+        }
         else
         {
-            upgradeMenu.SetActive(true);
-            //Debug.Log("You beat stage");
+            Debug.Log("You beat stage");
         }
     }
 
@@ -162,6 +168,43 @@ public class GameManager : MonoBehaviour
 
     public void ClickTest()
     {
-        Debug.Log("Button Clicked");
+        UpgradeButton upgradeButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<UpgradeButton>();
+        Debug.Log("Upgrade with ID " + upgradeButton.upgrade.upgradeID.ToString() + " was pressed");
+        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(isPaused && !systemPause)
+            {
+                Time.timeScale = 1;
+                isPaused = false;
+            }
+
+            else if(!isPaused && !systemPause)
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+            }
+        }
+    }
+
+    public void SystemPause(bool activate)
+    {
+        if(!activate)
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+            systemPause = false;
+        }
+
+        if(activate)
+        {
+            systemPause = true;
+            isPaused = true;
+            Time.timeScale = 0;
+        }
     }
 }

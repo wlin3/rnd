@@ -9,6 +9,8 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +25,7 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(5);
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.U))
         {
@@ -46,8 +45,10 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)
         {
+            //Destroy(player);
             currentHealth = maxHealth;
             healthBar.SetHealth(currentHealth);
         }
     }
+
 }

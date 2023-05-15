@@ -60,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         enemyHealth = GetComponent<EnemyHealth>();
-        //EnemyType = (enemyType)Random.Range(0, 2);
-        EnemyType = enemyType.Shooter;
+        EnemyType = (enemyType)Random.Range(0, 2);
+        //EnemyType = enemyType.Shooter;
         if (EnemyType == enemyType.Shooter)
         {
             enemyHealth.enemyMaxHealth = Mathf.RoundToInt(30f * (1f + (difficultyMultiplier * numberOfWins))); // Explicit cast to int
@@ -209,6 +209,10 @@ public class EnemyMovement : MonoBehaviour
         // Calculate the fling force based on the damage percentage
         float damagePercentage = damage / enemyHealth.enemyMaxHealth; // Assuming maxHealth is a known float value
         float flingForce = damagePercentage * maxFlingForce + 8f;
+        if (EnemyType == enemyType.Shooter)
+        {
+            flingForce *= .45f;
+        }
         // Calculate the direction from the player to the enemy
         Vector2 attackDirection = (transform.position - target.position).normalized;
 
@@ -249,38 +253,34 @@ public class EnemyMovement : MonoBehaviour
 
     void Shooter()
     {
-         float distance = Vector2.Distance(transform.position, target.position);
-         Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
+        float distance = Vector2.Distance(transform.position, target.position);
+        Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
 
-        // If the player is within range, shoot at the player
-        if (distance <= shooterMaxDistance)
+        // Update attack cooldown timer
+        shooterAttackCooldownTimer -= Time.deltaTime;
+
+        // If attack cooldown has elapsed, shoot at the player
+        if (shooterAttackCooldownTimer <= 0 && distance <= shooterMaxDistance)
         {
-            // Update attack cooldown timer
-            shooterAttackCooldownTimer -= Time.deltaTime;
+            ShootAtTarget(target.position);
 
-            // If attack cooldown has elapsed, shoot at the player
-            if (shooterAttackCooldownTimer <= 0)
-            {
-                ShootAtTarget(target.position);
-
-                // Reset attack cooldown timer
-                shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
-            }
+            // Reset attack cooldown timer
+            shooterAttackCooldownTimer = Random.Range(shooterAttackCooldownMin, shooterAttackCooldownMax);
         }
 
-        // If the player is out of range, move towards the player
-        else
+        // If the player is within range, stop moving horizontally
+        if (distance >= shooterMaxDistance)
         {
-            //Vector2 direction = new Vector2(Mathf.Sign(target.position.x - transform.position.x), 0);
-
             // Calculate the speed of the enemy based on the distance to the player
             float targetSpeed = Mathf.Clamp(shooterAcceleration * distance / shooterMaxDistance, shooterSpeed, shooterAcceleration);
 
             // Move towards the player
             Vector2 newVelocity = direction * targetSpeed;
-            rb.velocity = newVelocity;
+            rb.velocity = new Vector2(newVelocity.x, rb.velocity.y);
         }
         
+
+        // Flip the enemy sprite if necessary
         if (direction.x < 0 && facingRight) 
         {
             facingRight = false;
@@ -295,6 +295,9 @@ public class EnemyMovement : MonoBehaviour
             spriteTransform.localScale = new Vector3(1, 1, 1);
         }
     }
+
+
+
 
     void ShootAtTarget(Vector2 targetPosition)
     {

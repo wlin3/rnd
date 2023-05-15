@@ -26,18 +26,18 @@ public class Jumping : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-        if (Input.GetKeyDown(KeyCode.W) && isGrounded && isJumping == false)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded && isJumping == false)
         {
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = new Vector2(rb.velocity.x, initialJumpForce);
         }
-        if(Input.GetKeyUp(KeyCode.W))
+        if((Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow)))
             {
                 isJumping = false;
             }
 
-        if (Input.GetKey(KeyCode.W) && isJumping == true)
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && isJumping == true)
         {
             if (jumpTimeCounter > 0)
             {

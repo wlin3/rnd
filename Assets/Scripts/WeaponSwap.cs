@@ -29,7 +29,7 @@ public class WeaponSwap : MonoBehaviour
         // Check for key presses and switch weapons if necessary
         foreach (KeyValuePair<KeyCode, WeaponParent> pair in keyMap)
         {
-            if (Input.GetKeyDown(pair.Key))
+            if (Input.GetKeyDown(pair.Key) && !GameManager.Instance.isPaused)
             {
                 SwitchWeapon(pair.Value);
             }

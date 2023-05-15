@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 6894516367495052000}
   - component: {fileID: 6894516367495052005}
   - component: {fileID: 6894516367495052004}
+  - component: {fileID: 9046265492354840409}
   m_Layer: 8
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -136,6 +137,7 @@ MonoBehaviour:
   EnemyType: 0
   player: {fileID: 0}
   target: {fileID: 0}
+  difficultyMultiplier: 0.05
   chaserSprite: {fileID: 4376304840909894385}
   chaserSpeed: 10
   chaserAcceleration: 2
@@ -155,7 +157,7 @@ MonoBehaviour:
     type: 3}
   shooterProjectileSpawnPoint: {fileID: 6894516369225009164}
   shooterMaxDistance: 20
-  shooterSpeed: 4
+  shooterSpeed: 8
   shooterAcceleration: 10
   shooterAttackCooldownMin: 2
   shooterAttackCooldownMax: 4
@@ -221,6 +223,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &9046265492354840409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6894516367495052027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27643a3115991654baaa699b5ef5e53a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: -15
 --- !u!1 &6894516367922919464
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,6 +479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  difficultyMultiplier: 0.05
 --- !u!1 &6894516369225009155
 GameObject:
   m_ObjectHideFlags: 0

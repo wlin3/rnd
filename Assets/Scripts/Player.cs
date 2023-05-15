@@ -21,24 +21,28 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = new Vector2(mousePosition.x - spriteTransform.position.x, mousePosition.y - spriteTransform.position.y);
-        moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * walkspeed, rb.velocity.y);
+        if(!GameManager.Instance.isPaused)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = new Vector2(mousePosition.x - spriteTransform.position.x, mousePosition.y - spriteTransform.position.y);
+            moveInput = Input.GetAxis("Horizontal");
+            rb.velocity = new Vector2(moveInput * walkspeed, rb.velocity.y);
 
-        if (direction.x < 0 && facingRight) 
-        {
-            facingRight = false;
-            spriteTransform.localScale = new Vector3(1, -1, 1);
-            transform.Rotate(0, 0, 180);
-            direction = new Vector2(-direction.x, -direction.y);
-        } 
-        else if(direction.x > 0 && !facingRight)
-        {
-            facingRight = true;
-            transform.Rotate(0, 0, 180);
-            spriteTransform.localScale = new Vector3(1, 1, 1);
+            if (direction.x < 0 && facingRight) 
+            {
+                facingRight = false;
+                spriteTransform.localScale = new Vector3(1, -1, 1);
+                transform.Rotate(0, 0, 180);
+                direction = new Vector2(-direction.x, -direction.y);
+            } 
+            else if(direction.x > 0 && !facingRight)
+            {
+                facingRight = true;
+                transform.Rotate(0, 0, 180);
+                spriteTransform.localScale = new Vector3(1, 1, 1);
+            }
         }
+        
 
         
     }

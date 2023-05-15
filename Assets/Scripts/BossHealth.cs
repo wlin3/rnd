@@ -26,10 +26,13 @@ public class BossHealth : MonoBehaviour
         }
     }
 
-    public void BossTakeDamage(int damage)
+    public void BossTakeDamage(float damage)
     {
-        currentHealth -= damage;
+        float variation = UnityEngine.Random.Range(-0.15f, 0.15f);
+        float modifiedDamage = damage + damage * variation;
+        currentHealth -= (int)modifiedDamage;
         healthBar.BossSetHealth(currentHealth);
+        DamagePopup.Create(transform.position, (int)modifiedDamage);
         if(currentHealth <= 0)
         {
             currentHealth = maxHealth;
