@@ -30,12 +30,12 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamageEnemy(float damage)
     {
-        float variation = UnityEngine.Random.Range(-0.15f, 0.15f);
+        float variation = UnityEngine.Random.Range(-0.15f, 0.25f);
         float modifiedDamage = damage + damage * variation;
         enemyCurrentHealth -= (int)modifiedDamage;
         healthBar.UpdateHealthBar(enemyCurrentHealth, enemyMaxHealth);
         enemyMovement.TakeDamage(modifiedDamage);
-        DamagePopup.Create(transform.position, (int)modifiedDamage);
+        DamagePopup.Create(transform.position, (int)modifiedDamage, false);
         if(enemyCurrentHealth <= 0)
         {
             GameManager.Instance.AddPoints(1);

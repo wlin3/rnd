@@ -32,7 +32,7 @@ public class BossHealth : MonoBehaviour
         float modifiedDamage = damage + damage * variation;
         currentHealth -= (int)modifiedDamage;
         healthBar.BossSetHealth(currentHealth);
-        DamagePopup.Create(transform.position, (int)modifiedDamage);
+        DamagePopup.Create(transform.position, (int)modifiedDamage, false);
         if(currentHealth <= 0)
         {
             currentHealth = maxHealth;

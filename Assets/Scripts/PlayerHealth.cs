@@ -40,7 +40,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        float variation = UnityEngine.Random.Range(-0.15f, 0.1f);
+        float modifiedDamage = damage + damage * variation;
+        currentHealth -= (int)modifiedDamage;
+        DamagePopup.Create(transform.position, (int)modifiedDamage, true);
         //Debug.Log("Damage");
         healthBar.SetHealth(currentHealth);
         if(currentHealth <= 0)

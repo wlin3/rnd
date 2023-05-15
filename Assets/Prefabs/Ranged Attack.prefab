@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9895ed031bfc2b046a90aa00a60a360a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 8
-  force: 10
+  damage: 12
+  force: 8
   rotationDegree: 0
   canDecelerate: 1
   distance: 9
   decelerationTime: 0.1
-  lingerTime: 0.4
+  lingerTime: 0.5
 --- !u!50 &6411788130678934555
 Rigidbody2D:
   serializedVersion: 4

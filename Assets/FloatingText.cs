@@ -16,7 +16,7 @@ public class FloatingText : MonoBehaviour
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
-            DamagePopup.Create(mousePosition, 100);
+            DamagePopup.Create(mousePosition, 100,false);
         }
     }
 }

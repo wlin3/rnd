@@ -53,6 +53,14 @@ public class BasicAbilityE : MonoBehaviour
                 {
                     abilityCooldown *= 0.5f;
                 }
+                if(chargeLevel == 1f)
+                {
+                    abilityCooldown *= 0.65f;
+                }
+                if(chargeLevel == 2f)
+                {
+                    abilityCooldown *= 0.85f;
+                }
                 Vector3 mousePosition = GetMouseWorldPosition().normalized;
                 StartCoroutine(Shoot(mousePosition));
 

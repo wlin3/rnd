@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using CodeMonkey.Utils;
 
 public class DamagePopup : MonoBehaviour
 {
     //Create a damage popup
-    public static DamagePopup Create(Vector3 position, int damageAmount)
+    public static DamagePopup Create(Vector3 position, int damageAmount, bool isPlayerHit)
     {
         Transform damagePopupTransform = Instantiate(GameAssets.i.pfDamagePopup, position, Quaternion.identity);
         DamagePopup damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
-        damagePopup.Setup(damageAmount);
+        damagePopup.Setup(damageAmount, isPlayerHit);
 
         return damagePopup;
     }
@@ -34,10 +35,18 @@ public class DamagePopup : MonoBehaviour
         textMesh = transform.GetComponent<TextMeshPro>();
     }
 
-    public void Setup(float damageAmount)
+    public void Setup(float damageAmount, bool isPlayerHit)
     {
         textMesh.SetText(damageAmount.ToString());
-        textColor = textMesh.color;
+        if(!isPlayerHit)
+        {
+            textColor = UtilsClass.GetColorFromString("ffb63b");
+        }
+        if(isPlayerHit)
+        {
+            textColor = UtilsClass.GetColorFromString("c40606");
+        }
+        textMesh.color = textColor;
         disappearTimer = disappearTimerMax;
 
         sortingOrder++;
