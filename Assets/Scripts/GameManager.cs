@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
             // Set the values from the loaded data
             testPoints = data.testPoints;
-            canTeleport = data.canTeleport;
+            //canTeleport = data.canTeleport;
             stagesWon = data.stagesWon;
             upgradePoints = data.upgradePoints;
             // Set any other variables or upgrades from the loaded data
