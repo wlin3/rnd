@@ -111,22 +111,36 @@ public class EnemySpawner : MonoBehaviour
     private Vector3 GetRandomSpawnPosition()
     {
         Vector2 randomDirection = Random.insideUnitCircle.normalized;
-        
+
         // Determine the left and right boundaries for spawning
         float minX = leftBound.position.x;
         float maxX = rightBound.position.x;
-        
-        // Randomly choose a point along the x-axis between the two bounds
-        float randomX = Random.Range(minX, maxX);
-        
-        // Set the corresponding y and z values to 0
-        float randomY = 0f;
-        float randomZ = 0f;
-        
-        // Create and return the spawn point as a Vector3
-        Vector3 spawnPoint = new Vector3(randomX, randomY, randomZ);
+
+        Vector3 spawnPoint;
+        do
+        {
+            // Randomly choose a point along the x-axis between the two bounds
+            float randomX = Random.Range(minX, maxX);
+
+            // Set the corresponding y and z values to 0
+            float randomY = 0f;
+            float randomZ = 0f;
+
+            // Create the spawn point as a Vector3
+            spawnPoint = new Vector3(randomX, randomY, randomZ);
+
+            // Check if the spawn point is within 10 units of the player
+            if (Vector3.Distance(spawnPoint, player.transform.position) > 10f)
+            {
+                // Spawn point is valid, exit the loop
+                break;
+            }
+        } while (true);
+
         return spawnPoint;
     }
+
+
 
 
 
