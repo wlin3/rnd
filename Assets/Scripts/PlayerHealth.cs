@@ -25,6 +25,11 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+
+         if (Input.GetKeyDown(KeyCode.H))
+        {
+            Heal(15);
+        }
         
 
         if (Input.GetKeyDown(KeyCode.U))
@@ -52,6 +57,13 @@ public class PlayerHealth : MonoBehaviour
             MainGui.instance.HideGUi();
             DeathGUI.instance.ShowGui();
         }
+    }
+
+    public void Heal(int healing)
+    {
+        currentHealth += (int)healing;
+        healthBar.SetHealth(currentHealth);
+        
     }
 
 }

@@ -132,7 +132,7 @@ public class UpgradeManager : MonoBehaviour
     {
         playerHealth.maxHealth += 15;
         healthBar.SetMaxHealth(playerHealth.maxHealth);
-        playerHealth.TakeDamage(-15);
+        playerHealth.Heal(15);
     }
 
     private void TurnBowIntoTripleShot()

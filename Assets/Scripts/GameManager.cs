@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     public void WinEnemyStage()
     {
         stagesWon += 1;
-        if (canTeleport)
+        if (!demoMode)
         {
             // Hide the main GUI
             MainGui.instance.HideGUi();

@@ -205,6 +205,8 @@ MonoBehaviour:
   enemyMaxHealth: 100
   enemyCurrentHealth: 0
   isImmune: 0
+  isBoss: 0
+  bossHealthBar: {fileID: 0}
 --- !u!114 &28772962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,6 +1554,8 @@ MonoBehaviour:
   enemyMaxHealth: 100
   enemyCurrentHealth: 0
   isImmune: 0
+  isBoss: 0
+  bossHealthBar: {fileID: 0}
 --- !u!114 &380653576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,7 +1655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b21b2676c310f446847dd145e1ef447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demoMode: 1
+  demoMode: 0
   testPoints: 0
   canTeleport: 0
   stagesWon: 0

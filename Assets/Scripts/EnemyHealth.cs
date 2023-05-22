@@ -8,15 +8,25 @@ public class EnemyHealth : MonoBehaviour
     public int enemyCurrentHealth;
     private EnemyMovement enemyMovement;
     public bool isImmune = false;
+    public bool isBoss = false;
 
     private FloatingHealthBar healthBar;
+    public BossHealthBar bossHealthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         enemyCurrentHealth = enemyMaxHealth;
         enemyMovement = GetComponent<EnemyMovement>();
-        healthBar = GetComponentInChildren<FloatingHealthBar>();
+        if(!isBoss)
+        {
+            healthBar = GetComponentInChildren<FloatingHealthBar>();
+        }
+        if(isBoss)
+        {
+            bossHealthBar.BossSetMaxHealth(enemyMaxHealth);
+        }
+
     }
 
     // Update is called once per frame
@@ -33,12 +43,24 @@ public class EnemyHealth : MonoBehaviour
         float variation = UnityEngine.Random.Range(-0.15f, 0.25f);
         float modifiedDamage = damage + damage * variation;
         enemyCurrentHealth -= (int)modifiedDamage;
-        healthBar.UpdateHealthBar(enemyCurrentHealth, enemyMaxHealth);
-        enemyMovement.TakeDamage(modifiedDamage);
+        if(!isBoss)
+        {
+            healthBar.UpdateHealthBar(enemyCurrentHealth, enemyMaxHealth);
+            enemyMovement.TakeDamage(modifiedDamage);
+        }
+        if(isBoss)
+        {
+            bossHealthBar.BossSetHealth(enemyCurrentHealth);
+        }
         DamagePopup.Create(transform.position, (int)modifiedDamage, false);
         if(enemyCurrentHealth <= 0)
         {
             GameManager.Instance.AddPoints(1);
+            if(isBoss)
+            {
+                Destroy(bossHealthBar);
+                GameManager.Instance.WinEnemyStage();
+            }
             Destroy(gameObject);
         }
     }

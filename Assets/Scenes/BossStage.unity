@@ -4362,7 +4362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b21b2676c310f446847dd145e1ef447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demoMode: 0
+  demoMode: 1
   testPoints: 0
   canTeleport: 1
   stagesWon: 0
@@ -5474,7 +5474,7 @@ GameObject:
   - component: {fileID: 1790236219}
   m_Layer: 8
   m_Name: FlyingFish
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5635,13 +5635,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1790236211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 834e391c70eaa4d4c9c7b236779a0046, type: 3}
+  m_Script: {fileID: 11500000, guid: ed1183b4643100b4da15a538f479ec0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  currentHealth: 0
-  BossisImmune: 0
-  healthBar: {fileID: 1200585528}
+  enemyMaxHealth: 200
+  enemyCurrentHealth: 0
+  isImmune: 0
+  isBoss: 1
+  bossHealthBar: {fileID: 1200585528}
 --- !u!1 &1804042268
 GameObject:
   m_ObjectHideFlags: 0

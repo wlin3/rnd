@@ -29,6 +29,10 @@ public class HealthBar : MonoBehaviour
 
     public void SetHealth(int health)
     {
+        if(chipSlider.value < healthSlider.value)
+        {
+            chipSlider.value = healthSlider.value;
+        }
         if (chipEffectCoroutine != null)
         {
             StopCoroutine(chipEffectCoroutine);
