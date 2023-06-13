@@ -3320,12 +3320,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoFire: 1
   cooldownBar1: {fileID: 1149819663}
+  floatingCooldownBar1: {fileID: 0}
   basicCanAttack: 0
   cooldownBar2: {fileID: 1770510986}
+  floatingCooldownBar2: {fileID: 0}
   chargedCanAttack: 0
   cooldownBar3: {fileID: 487476010}
+  floatingCooldownBar3: {fileID: 0}
   secondCanAttack: 0
   cooldownBar4: {fileID: 829073441}
+  floatingCooldownBar4: {fileID: 0}
   thirdCanAttack: 0
 --- !u!114 &1271985043
 MonoBehaviour:
@@ -5730,7 +5734,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.4
+  m_fontSize: 48.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
